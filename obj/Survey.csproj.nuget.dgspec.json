@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj": {}
+    "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj": {
+    "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj",
         "projectName": "Survey",
-        "projectPath": "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj",
-        "packagesPath": "C:\\Users\\SN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SN\\source\\repos\\Survey\\obj\\",
+        "projectPath": "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Source\\Repos\\Survey\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\SN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,6 +59,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[3.1.13, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             }
           },
           "imports": [
