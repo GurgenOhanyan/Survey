@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Survey.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Company,Role,string>
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Option> Options { get; set; }
@@ -44,7 +44,7 @@ namespace Survey.Data
             modelBuilder.Entity<Models.Survey>()
              .HasOne(x => x.Company)
             .WithOne(c => c.Survey)
-            .HasForeignKey<Models.Survey>(p => new { p.CompanyId, p.CompanyName });
+            .HasForeignKey<Models.Survey>(p => new {p.CompanyId, p.CompanyName });
 
             modelBuilder.Entity<QuestionType>()
                 .Property(q => q.Name).HasConversion<string>();
