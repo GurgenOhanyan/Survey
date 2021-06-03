@@ -17,6 +17,7 @@ namespace Survey.Data
         public DbSet<QuestionType> QuestionTypes { get; set; }
         public DbSet<Models.Survey> Survey { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Participant> Participants { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
