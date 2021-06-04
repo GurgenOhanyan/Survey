@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Survey.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Company,Role,string>
+    public class ApplicationDbContext : DbContext // IdentityDbContext<Company,Role,string>
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Option> Options { get; set; }

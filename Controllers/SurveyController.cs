@@ -11,10 +11,12 @@ namespace Survey.Controllers
     [Route("{survey}")]
     public class SurveyController : Controller
     {
-        private ISurveyRepository surveyRepository; 
-        public SurveyController(ISurveyRepository surveyRepository)
+        private ISurveyRepository surveyRepository;
+        private IQuestionRepository questionRepository;
+        public SurveyController(ISurveyRepository surveyRepository, IQuestionRepository questionRepository)
         {
             this.surveyRepository = surveyRepository;
+            this.questionRepository = questionRepository;
         }
         public IActionResult Index()
         {
@@ -35,6 +37,14 @@ namespace Survey.Controllers
             //surveys.Add(new Models.Survey { Id = 3, Company = new Models.Company(), CompanyId = 21, CompanyName = "MACO", Questions = null, QuestionsCount = 7 });
             
             return View(surveys);
+        }
+
+        [HttpGet]
+        [Route("ShowSurvey")]
+        public ActionResult ShowSurvey([FromQuery] int id)
+        {
+            var questionList = this.questionRepository.GetQuestionsBySurveyId(id);
+            return View(questionList);
         }
     }
 }

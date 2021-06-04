@@ -7,5 +7,6 @@ namespace Survey.Models.Repository
 {
     public interface IQuestionRepository : IRepository<Question, int>
     {
+        IEnumerable<Question> GetQuestionsBySurveyId(int id);
     }
 }

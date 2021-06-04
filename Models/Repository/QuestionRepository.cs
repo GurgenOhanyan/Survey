@@ -24,6 +24,11 @@ namespace Survey.Models.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Question> GetQuestionsBySurveyId(int id)
+        {
+            return this.context.Questions.Where(q => q.SurveyId == id);
+        }
+
         public IList<Question> ReadAll()
         {
             return this.context.Questions.ToList();
