@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Models.Repository
 {
-    interface IParticipantRepository : IRepository<Participant, int>
+    public interface IParticipantRepository : IRepository<Participant, int>
     {
+
     }
 }

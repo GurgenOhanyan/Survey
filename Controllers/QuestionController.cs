@@ -30,7 +30,7 @@ namespace Survey.Controllers
             if (questionList == null || !questionList.Any() )
                 return NotFound();
 
-            return Ok(questionList);
+            return View(questionList);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Survey.Controllers
 {
     [ApiController]
-    [Route("{survey}")]
+    [Route("{controller}")]
     public class SurveyController : Controller
     {
         private ISurveyRepository surveyRepository;
