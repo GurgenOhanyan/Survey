@@ -1,17 +1,17 @@
 ﻿@model Participant
 
 @{
-    ViewData["Title"] = "AddParticipant";
+    ViewData["Title"] = "Creat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>AddParticipant</h1>
+<h1>Creat</h1>
 
 <h4>Participant</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddParticipant">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -39,3 +39,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

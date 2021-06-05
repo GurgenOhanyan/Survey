@@ -40,7 +40,7 @@ namespace Survey.Models.Repository
 
         public IList<Participant> ReadAll()
         {
-            throw new NotImplementedException();
+            return this.context.Participants.ToList();
         }
 
         public Participant ReadById(int id)

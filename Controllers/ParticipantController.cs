@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Survey.Controllers
 {
     [ApiController]
-    [Route("Participant")]
+    [Route("{controller}")]
     public class ParticipantController : Controller
     {
         private IParticipantRepository participantRepository;
@@ -19,6 +19,7 @@ namespace Survey.Controllers
             this.participantRepository = participantRepository;
         }
 
+        
         public IActionResult Index()
         {
             return View();
@@ -40,6 +41,28 @@ namespace Survey.Controllers
                 return View(participant);
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public ActionResult Create(/*[Bind("FirstName, Lastname, BirthDate")] Participant participant*/)
+        {
+            Participant p = new Participant { BirthDate = DateTime.Now, FirstName = "first", Lastname = "last" };
+
+            if (!ModelState.IsValid)
+            {
+                participantRepository.Create(p);
+            }
+
+            return View(p);
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public IActionResult AllParticipants()
+        {
+            var partisipants = this.participantRepository.ReadAll();
+            return View(partisipants);
         }
     }
 }

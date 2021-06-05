@@ -13,9 +13,11 @@ namespace Survey.Controllers
     public class QuestionController : Controller
     {
         private IQuestionRepository questionRepository;
-        public QuestionController(IQuestionRepository questionRepository)
+        private ISurveyRepository surveyRepository;
+        public QuestionController(IQuestionRepository questionRepository, ISurveyRepository surveyRepository)
         {
             this.questionRepository = questionRepository;
+            this.surveyRepository = surveyRepository;
         }
         public IActionResult Index()
         {
@@ -23,13 +25,19 @@ namespace Survey.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
         public ActionResult<Question> GetQuestionsBySurveyId([FromQuery] int id)
         {
-            var questionList = questionRepository.GetQuestionsBySurveyId(id);
+            var questionList = this.questionRepository.GetQuestionsBySurveyId(id);
             if (questionList == null || !questionList.Any() )
                 return NotFound();
 
+            string companyName = surveyRepository.ReadById(
+                questionList.First()
+                .SurveyId)
+                .CompanyName
+                .ToString();
+
+            ViewData["company"] = companyName;
             return View(questionList);
         }
     }

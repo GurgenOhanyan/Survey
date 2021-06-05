@@ -44,9 +44,10 @@
                 @Html.DisplayFor(modelItem => item.CompanyName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @*@Html.ActionLink("GetQuestionsBySurveyId", "GetQuestionsBySurveyId", new {  id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                <a  asp-controller="Question" asp-action="GetQuestionsBySurveyId" asp-route-id="@item.Id">Show</a> |
             </td>
         </tr>
 }
