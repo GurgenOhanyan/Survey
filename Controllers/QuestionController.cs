@@ -19,9 +19,10 @@ namespace Survey.Controllers
             this.questionRepository = questionRepository;
             this.surveyRepository = surveyRepository;
         }
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] int id)
         {
-            return View();
+            var questions = this.questionRepository.ReadAll();
+            return View(questions);
         }
 
         [HttpGet]
@@ -39,6 +40,10 @@ namespace Survey.Controllers
 
             ViewData["company"] = companyName;
             return View(questionList);
+        
+        
         }
+
+        
     }
 }

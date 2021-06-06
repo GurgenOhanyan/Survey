@@ -7,6 +7,6 @@ namespace Survey.Models.Repository
 {
     public interface IParticipantRepository : IRepository<Participant, int>
     {
-
+        void Add(Participant entity);
     }
 }

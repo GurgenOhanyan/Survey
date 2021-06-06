@@ -15,11 +15,17 @@ namespace Survey.Models.Repository
                 
         }
 
+        public void Add(Participant entity)
+        {
+            this.context.Participants.Add(entity);
+            this.context.SaveChanges();
+        }
+
         public void AddParticipant(string firstName, string lastName, DateTime birdtDate)
         {
             Participant participant = new Participant();
             participant.FirstName = firstName;
-            participant.Lastname = lastName;
+            participant.LastName = lastName;
             participant.BirthDate = birdtDate;
             
             this.context.Participants.Add(participant);
@@ -45,12 +51,17 @@ namespace Survey.Models.Repository
 
         public Participant ReadById(int id)
         {
-            throw new NotImplementedException();
+            return this.context.Participants.Find(id);
         }
 
         public Participant Update(Participant entity)
         {
-            throw new NotImplementedException();
+            Participant trackedEntity = this.context.Participants.Find(entity.Id);
+            trackedEntity.FirstName = entity.FirstName;
+            trackedEntity.LastName = entity.LastName;
+            trackedEntity.BirthDate = entity.BirthDate;
+            context.SaveChanges();
+            return trackedEntity;
         }
     }
 }

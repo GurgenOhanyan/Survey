@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @*@Html.DisplayNameFor(model => model.Id)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.QuestionsCount)
@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @*@Html.DisplayFor(modelItem => item.Id)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QuestionsCount)
@@ -41,13 +41,14 @@
                 @Html.DisplayFor(modelItem => item.CompanyId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
+                @*@Html.DisplayFor(modelItem => item.CompanyName)*@
+                <a asp-controller="Question" asp-action="GetQuestionsBySurveyId" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.CompanyName)</a>
             </td>
             <td>
                 @*@Html.ActionLink("GetQuestionsBySurveyId", "GetQuestionsBySurveyId", new {  id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                <a  asp-controller="Question" asp-action="GetQuestionsBySurveyId" asp-route-id="@item.Id">Show</a> |
+                @*<a  asp-controller="Question" asp-action="GetQuestionsBySurveyId" asp-route-id="@item.Id">Show</a> |*@
             </td>
         </tr>
 }

@@ -24,6 +24,22 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Header)
+
+                @switch (item.QuestionType.Name)
+                {
+                        case QuestionTypes.Options:
+                            @Html.RadioButtonFor(modelItem => item.Answers, "Yes")
+                            break;
+                        case QuestionTypes.Text:
+                            @Html.RadioButtonFor(modelItem => item.Answers, "Yes")
+                            @Html.RadioButtonFor(modelItem => item.Answers, "N0")
+                            break;
+                        case QuestionTypes.YesNo:
+                            @Html.RadioButtonFor(modelItem => item.Answers, "Yes")
+                            @Html.RadioButtonFor(modelItem => item.Answers, "No")
+                            @Html.RadioButtonFor(modelItem => item.Answers, "NA")
+                            break;
+                }
             </td>
             <td>
                 @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

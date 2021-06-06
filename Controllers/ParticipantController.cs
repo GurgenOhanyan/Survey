@@ -1,16 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Survey.Models;
 using Survey.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Survey.Controllers
 {
-    [ApiController]
-    [Route("{controller}")]
+
     public class ParticipantController : Controller
     {
         private IParticipantRepository participantRepository;
@@ -19,50 +13,67 @@ namespace Survey.Controllers
             this.participantRepository = participantRepository;
         }
 
-        
-        public IActionResult Index()
+
+        public ActionResult Index()
+        {
+            var partisipants = this.participantRepository.ReadAll();
+            return View(partisipants);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Participant participant = this.participantRepository.ReadById(id);
+            return View(participant);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Participant participant)
+        {
+            if (!ModelState.IsValid)
+                return View(participant);
+
+            this.participantRepository.Update(participant);
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
+        [HttpGet]
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult<Participant> PostParticipant(Participant participant)
+        public ActionResult Create([Bind("FirstName, LastName, BirthDate")] Participant participant)
         {
-            if (!ModelState.IsValid)
-                return View(participant);
+            if (ModelState.IsValid)
+                this.participantRepository.Add(participant);
 
-            try 
-            {
-                this.participantRepository.Create(participant);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                ModelState.AddModelError(string.Empty, $@"Unable to create record:  {ex.Message}");
-                return View(participant);
-            }
             return RedirectToAction(nameof(Index));
+
         }
 
-        [HttpPost]
-        [Route("create")]
-        public ActionResult Create(/*[Bind("FirstName, Lastname, BirthDate")] Participant participant*/)
-        {
-            Participant p = new Participant { BirthDate = DateTime.Now, FirstName = "first", Lastname = "last" };
+        //[HttpPost]
+        ////[Route("create")]
+        //public ActionResult Create([Bind(include: "FirstName, Lastname, BirthDate")] Participant participant)
+        //{
+        //    Participant p = new Participant();
+        //    if (!ModelState.IsValid)
+        //    {
+        //        participantRepository.Create(participant);
+        //    }
 
-            if (!ModelState.IsValid)
-            {
-                participantRepository.Create(p);
-            }
+        //    return View(participant);
+        //}
 
-            return View(p);
-        }
-
-        [HttpGet]
-        [Route("all")]
-        public IActionResult AllParticipants()
-        {
-            var partisipants = this.participantRepository.ReadAll();
-            return View(partisipants);
-        }
+        ////[HttpGet]
+        ////[Route("all")]
+        ////public IActionResult AllParticipants()
+        ////{
+        ////    var partisipants = this.participantRepository.ReadAll();
+        ////    return View(partisipants);
+        ////}
     }
 }

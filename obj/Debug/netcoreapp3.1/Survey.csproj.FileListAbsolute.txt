@@ -252,7 +252,6 @@ C:\Users\user\Source\Repos\Survey\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnaly
 C:\Users\user\Source\Repos\Survey\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\user\Source\Repos\Survey\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\user\Source\Repos\Survey\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Survey\AllSurveys.cshtml.g.cs
 C:\Users\User\Source\Repos\3.Survey\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\User\Source\Repos\3.Survey\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\User\Source\Repos\3.Survey\bin\Debug\netcoreapp3.1\Survey.StaticWebAssets.xml
@@ -496,6 +495,9 @@ C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\P
 C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Survey\ShowSurvey.cshtml.g.cs
 C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Question\GetQuestionsBySurveyId.cshtml.g.cs
-C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Participant\Create.cshtml.g.cs
-C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Participant\AllParticipants.cshtml.g.cs
 C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Survey.csprojAssemblyReference.cache
+C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Survey\Index.cshtml.g.cs
+C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Participant\Index.cshtml.g.cs
+C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Participant\Edit.cshtml.g.cs
+C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Participant\Create.cshtml.g.cs
+C:\Users\user\Source\Repos\Survey\obj\Debug\netcoreapp3.1\Razor\Views\Question\Index.cshtml.g.cs

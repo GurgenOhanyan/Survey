@@ -10,7 +10,7 @@ namespace Survey.Models
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
-        public string Lastname { get; set; }
+        public string LastName { get; set; }
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
         public List<Answer> Answers  { get; set; }
