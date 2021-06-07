@@ -26,7 +26,9 @@ namespace Survey.Models.Repository
 
         public IEnumerable<Question> GetQuestionsBySurveyId(int id)
         {
-            return this.context.Questions.Where(q => q.SurveyId == id);
+            return this.context.Questions.Where(q => q.SurveyId == id)
+                                        .Include(q => q.QuestionType)
+                                        .Include(q => q.Options);
         }
 
         public IList<Question> ReadAll()
