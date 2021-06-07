@@ -90,10 +90,9 @@ namespace Survey.Models.Repository
             throw new NotImplementedException();
         }
 
-        public Company GetCompany(int id, string name)
+        public Company GetCompany(string id)
         {
-            var x = context.Companies;
-            return context.Companies.Where(o=>o.Id == id && o.Name == name).FirstOrDefault();
+            return context.Companies.Where(o=>o.Id == id).FirstOrDefault();
         }
 
         public List<QuestionTypes> GetQuestionTypes()

@@ -22,29 +22,10 @@ namespace Survey.Data
             : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var configBuilder = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json")
-               .Build();
 
-            string connectionString = configBuilder.GetConnectionString("DefaultConnection");
-
-            optionsBuilder.UseSqlServer(connectionString);
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Company>().HasKey(c => new
-            {
-                c.Id,
-                c.Name
-            });
-
-            modelBuilder.Entity<Models.Survey>()
-             .HasOne(x => x.Company)
-            .WithOne(c => c.Survey)
-            .HasForeignKey<Models.Survey>(p => new {p.CompanyId, p.CompanyName });
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<QuestionTypes>()
                 .Property(q => q.Name).HasConversion<string>();

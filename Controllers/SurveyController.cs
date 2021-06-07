@@ -50,7 +50,7 @@ namespace Survey.Controllers
         [Route("AllSurveys")]
         public ActionResult AllSurveys()
         {
-            var surveys = this.surveyRepository.ReadAll();
+            var surveys = this.surveyRepo.ReadAll();
 
             //temporory list for tests
             //var surveys = new List<Models.Survey>();

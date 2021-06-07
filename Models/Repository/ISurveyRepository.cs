@@ -12,7 +12,7 @@ namespace Survey.Models.Repository
         public bool SurveyExists(int id);
         public Task<Survey> CreateAsync(Survey entity);
         public Task<Survey> UpdateAsync(Survey entity);
-        public Company GetCompany(int id, string name);
+        public Company GetCompany(string id);
         public List<QuestionTypes> GetQuestionTypes();
     }
 }
