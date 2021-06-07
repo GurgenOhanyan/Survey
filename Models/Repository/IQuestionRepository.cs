@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Survey.Models.Repository
 {
+    public interface IQuestionRepository : IRepository<Question, int>
     {
         public Task<Question> CreateAsync(Question entity);
     }
