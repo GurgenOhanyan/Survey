@@ -1,0 +1,44 @@
+﻿@model Question
+
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>Create</h1>
+
+<h4>Survey</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Questions">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" class="form-control" data-val="false" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionType" class="control-label"></label>
+                <select id="select1" asp-for="QuestionType" class="form-control" asp-items="ViewBag.QuestionTypes"  onchange="change();"></select>-->
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input id="input1" class="form-control" data-val="false" style="display:none;" />
+
+                </div>
+            </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+<script type="text/javascript">
+    function change() {
+        if (document.getElementById("<%= select1.ClientID %>").value == "Options") {
+            document.getElementById("<%= input1.ClientID %>").style.display = 'block';
+        }
+        else {
+            document.getElementById("<%= input1.ClientID %>").style.display = 'none';
+        }
+    }
+</script>

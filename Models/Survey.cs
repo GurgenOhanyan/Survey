@@ -10,6 +10,7 @@ namespace Survey.Models
         public int Id { get; set; }
         public int QuestionsCount { get; set; }
         public List<Question> Questions { get; set; }
+        public Status status { get; set; }
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public virtual Company Company { get; set; }

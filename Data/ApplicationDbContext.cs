@@ -14,7 +14,7 @@ namespace Survey.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<QuestionType> QuestionTypes { get; set; }
+        public DbSet<QuestionTypes> QuestionTypes { get; set; }
         public DbSet<Models.Survey> Survey { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -44,7 +44,7 @@ namespace Survey.Data
             .WithOne(c => c.Survey)
             .HasForeignKey<Models.Survey>(p => new { p.CompanyId, p.CompanyName });
 
-            modelBuilder.Entity<QuestionType>()
+            modelBuilder.Entity<QuestionTypes>()
                 .Property(q => q.Name).HasConversion<string>();
 
         }

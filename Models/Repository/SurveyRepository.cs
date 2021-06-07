@@ -1,4 +1,5 @@
-﻿using Survey.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Survey.Models.Repository
         {
             this.context = context;
         }
-        public Survey Create(Survey entity)
+        public async Task<Survey> CreateAsync(Survey entity)
         {
             this.context.Survey.Add(entity);
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
             return entity;
         }
 
@@ -27,7 +28,7 @@ namespace Survey.Models.Repository
             if (trackedEntity != null)
             {
                 this.context.Survey.Remove(trackedEntity);
-                this.context.SaveChanges();
+                this.context.SaveChangesAsync();
             }
         }
 
@@ -36,26 +37,68 @@ namespace Survey.Models.Repository
             return this.context.Survey.ToList();
         }
 
-        public Survey ReadById(int id)
+        public async Task<Survey> ReadById(int? id)
         {
-            return context.Survey.Find(id);
+            return await context.Survey.Include(o=>o.Company).FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public Survey Update(Survey entity)
+        public Survey ReadById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Survey>> RealAllIncludeCompany()
+        {
+            // return await context.Survey.Include(a => a.Company).ToListAsync();
+            var surveys = context.Survey.Include(a => a.Company);
+            return await surveys.ToListAsync();
+        }
+
+        public async Task<Survey> UpdateAsync(Survey entity)
         {
             Survey trackedEntity = this.context.Survey.Find(entity.Id);
 
             trackedEntity.Questions = entity.Questions;
             trackedEntity.QuestionsCount = entity.QuestionsCount;
+            trackedEntity.status = Status.Completed;
 
-            if (entity.
-                Id != 0 && string.IsNullOrEmpty(entity.CompanyName))
-            {
-                trackedEntity.CompanyId = entity.CompanyId;
-                trackedEntity.CompanyName = entity.CompanyName;
-            }
-            this.context.SaveChanges();
+            //if (entity.Id != 0 && string.IsNullOrEmpty(entity.CompanyName))
+            //{
+            //    trackedEntity.CompanyId = entity.CompanyId;
+            //    trackedEntity.CompanyName = entity.CompanyName;
+            //}
+            await this.context.SaveChangesAsync();
             return trackedEntity;
+        }
+
+        public Survey Create(Survey entity)
+        {
+            throw new NotImplementedException();
+        }
+        private bool SurveyExists(int id)
+        {
+            return context.Survey.Any(e => e.Id == id);
+        }
+
+        bool ISurveyRepository.SurveyExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Survey Update(Survey entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Company GetCompany(int id, string name)
+        {
+            var x = context.Companies;
+            return context.Companies.Where(o=>o.Id == id && o.Name == name).FirstOrDefault();
+        }
+
+        public List<QuestionTypes> GetQuestionTypes()
+        {
+            return context.QuestionTypes.ToList();
         }
     }
 }
