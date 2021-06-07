@@ -17,5 +17,7 @@ namespace Survey.Models
         [Required]
         [ForeignKey("Survey")]
         public int SurveyId { get; set; }
+
+        public List<Answer> Answers { get; set; }
     }
 }

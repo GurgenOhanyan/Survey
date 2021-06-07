@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Controllers
 {
+    [ApiController]
+    [Route("{survey}")]
     public class SurveyController : Controller
     {
         private readonly ISurveyRepository surveyRepo;
@@ -43,7 +45,21 @@ namespace Survey.Controllers
 
             return View(survay);
         }
+        //Get All Surveys
+        [HttpGet]
+        [Route("AllSurveys")]
+        public ActionResult AllSurveys()
+        {
+            var surveys = this.surveyRepository.ReadAll();
 
+            //temporory list for tests
+            //var surveys = new List<Models.Survey>();
+            //surveys.Add(new Models.Survey { Id = 1, Company = new Models.Company(), CompanyId = 2, CompanyName = "TROSIFOL", Questions = null, QuestionsCount = 3 });
+            //surveys.Add(new Models.Survey { Id = 2, Company = new Models.Company(), CompanyId = 225, CompanyName = "ALUTECH", Questions = null, QuestionsCount = 8 });
+            //surveys.Add(new Models.Survey { Id = 3, Company = new Models.Company(), CompanyId = 21, CompanyName = "MACO", Questions = null, QuestionsCount = 7 });
+
+            return View(surveys);
+        }
         //// GET: Survey/Create
         //public ActionResult Create()
         //{
@@ -88,7 +104,7 @@ namespace Survey.Controllers
             }
 
             if (ModelState.IsValid)
-            {
+        {
                 try
                 {
                     await surveyRepo.UpdateAsync(survey);
@@ -116,7 +132,7 @@ namespace Survey.Controllers
         {
             return View();
         }
-
+            
         // POST: SurveyController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -131,6 +147,5 @@ namespace Survey.Controllers
                 return View();
             }
         }
-      
     }
 }

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj": {}
+    "C:\\Users\\User\\Source\\Repos\\3.Survey\\Survey.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj": {
+    "C:\\Users\\User\\Source\\Repos\\3.Survey\\Survey.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\3.Survey\\Survey.csproj",
         "projectName": "Survey",
-        "projectPath": "C:\\Users\\SN\\source\\repos\\Survey\\Survey.csproj",
-        "packagesPath": "C:\\Users\\SN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SN\\source\\repos\\Survey\\obj\\",
+        "projectPath": "C:\\Users\\User\\Source\\Repos\\3.Survey\\Survey.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Source\\Repos\\3.Survey\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\SN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -46,17 +49,13 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.13, )"
+              "version": "[3.1.15, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[3.1.13, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
               "version": "[3.1.15, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.15, )"
             },
@@ -89,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

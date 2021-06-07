@@ -1,4 +1,5 @@
-﻿using Survey.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Survey.Models.Repository
             {
                 this.context.Questions.Remove(trackedEntity);
                 this.context.SaveChangesAsync();
-            }
+        }
         }
 
         public IList<Question> ReadAll()
@@ -44,7 +45,7 @@ namespace Survey.Models.Repository
 
         public Question ReadById(int id)
         {
-            return context.Questions.Find(id);
+            return this.context.Questions.Find(id);
         }
 
         public Question Update(Question entity)
@@ -55,8 +56,8 @@ namespace Survey.Models.Repository
             trackedEntity.QuestionType = entity.QuestionType;
             trackedEntity.SurveyId = entity.SurveyId;
             trackedEntity.Options = entity.Options;
-
-            this.context.SaveChangesAsync();
+        
+            this.context.SaveChanges();
             return trackedEntity;
         }
     }
