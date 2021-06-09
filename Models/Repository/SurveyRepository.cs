@@ -75,14 +75,9 @@ namespace Survey.Models.Repository
         {
             throw new NotImplementedException();
         }
-        private bool SurveyExists(int id)
+        public bool SurveyExists(int id)
         {
             return context.Survey.Any(e => e.Id == id);
-        }
-
-        bool ISurveyRepository.SurveyExists(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public Survey Update(Survey entity)

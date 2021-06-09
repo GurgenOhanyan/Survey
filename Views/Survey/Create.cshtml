@@ -1,4 +1,4 @@
-﻿@model Question
+﻿@model QuestionModelView
 
 @{
     ViewData["Title"] = "Create";
@@ -18,27 +18,63 @@
             </div>
             <div class="form-group">
                 <label asp-for="QuestionType" class="control-label"></label>
-                <select id="select1" asp-for="QuestionType" class="form-control" asp-items="ViewBag.QuestionTypes"  onchange="change();"></select>-->
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <input id="input1" class="form-control" data-val="false" style="display:none;" />
-
-                </div>
+                <select id="select1" asp-for="QuestionType" class="form-control" asp-items="ViewBag.QuestionTypes" onchange="change()"></select>
             </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <label id="label1" asp-for="Option1" class="control-label" style="display:none"></label>
+                    <input id="input1" asp-for="Option1" class="form-control" data-val="false" style="display:none" />
+                    <label id="label2" asp-for="Option2" class="control-label" style="display:none"></label>
+                    <input id="input2" asp-for="Option2" class="form-control" data-val="false" style="display:none"/>
+                    <label id="label3" asp-for="Option3" class="control-label" style="display:none"></label>
+                    <input id="input3" asp-for="Option3" class="form-control" data-val="false" style="display:none"/>
+                    <label id="label4" asp-for="Option4" class="control-label" style="display:none"></label>
+                    <input id="input4" asp-for="Option4" class="form-control" data-val="false" style="display:none"/>
+                    <label id="label5" asp-for="Option5" class="control-label" style="display:none"></label>
+                    <input id="input5" asp-for="Option5" class="form-control" data-val="false" style="display:none"/>
                 </div>
+                <input asp-for="SurveyId" value=@ViewBag.SurveyId hidden="hidden" />        
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
 
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 <script type="text/javascript">
-    function change() {
-        if (document.getElementById("<%= select1.ClientID %>").value == "Options") {
-            document.getElementById("<%= input1.ClientID %>").style.display = 'block';
+    function change()
+    {
+        if (document.getElementById('select1').value == 3)
+        {
+            document.getElementById('label1').style.display = 'inline';
+            document.getElementById('label2').style.display = 'inline';
+            document.getElementById('label3').style.display = 'inline';
+            document.getElementById('label4').style.display = 'inline';
+            document.getElementById('label5').style.display = 'inline';
+            document.getElementById('input1').style.display = 'inline';
+            document.getElementById('input2').style.display = 'inline';
+            document.getElementById('input3').style.display = 'inline';
+            document.getElementById('input4').style.display = 'inline';
+            document.getElementById('input5').style.display = 'inline';
         }
-        else {
-            document.getElementById("<%= input1.ClientID %>").style.display = 'none';
+        else
+        {
+            document.getElementById('label1').style.display = 'none';
+            document.getElementById('label2').style.display = 'none';
+            document.getElementById('label3').style.display = 'none';
+            document.getElementById('label4').style.display = 'none';
+            document.getElementById('label5').style.display = 'none';
+            document.getElementById('input1').style.display = 'none';
+            document.getElementById('input2').style.display = 'none';
+            document.getElementById('input3').style.display = 'none';
+            document.getElementById('input4').style.display = 'none';
+            document.getElementById('input5').style.display = 'none';
         }
     }
 </script>
+
+
+
+
+
+
+

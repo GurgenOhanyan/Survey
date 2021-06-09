@@ -32,48 +32,71 @@ namespace Survey.Controllers
             return View();
         }
 
-        // GET: QuestionsController/Create
-        public ActionResult Create()
-        {
-            ViewData["QuestionTypes"] = new SelectList(context.QuestionTypes, "Id", "Name");
-            return View();
-        }
+        //// GET: QuestionsController/Create
+        //public ActionResult Create()
+        //{
+        //    ViewData["QuestionTypes"] = new SelectList(Enum.GetValues(typeof(QuestionType)), "Id", "Name");
+        //    return View();
+        //}
 
         // POST: Questions/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Id,Header,QuestionType")] Question question)
-        {
-            if (ModelState.IsValid)
-            {
-                await questionRepo.CreateAsync(question);
-                return RedirectToAction(nameof(Create), "Survey");
-            }
-
-            ViewData["QuestionTypes"] = new SelectList(context.QuestionTypes, "Id", "Name", question.QuestionType);
-            //return View();
-            return RedirectToAction(nameof(Create), "Survey");
-        }
-        //// POST: Questions/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Create([Bind("Header,QuestionType,Option1,Option2,Option3,Option4,Option5")] QuestionModelView questionModelView)
+        //public async Task<ActionResult> Create([Bind("Id,Header,QuestionType")] Question question)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        Question question = new Question();
-        //        question.Header = questionModelView.Header;
-        //        question.QuestionType = questionModelView.QuestionType;
-        //        List<Option> options = new List<Option>();
-
         //        await questionRepo.CreateAsync(question);
         //        return RedirectToAction(nameof(Create), "Survey");
         //    }
 
-        //    ViewData["QuestionTypes"] = new SelectList(context.QuestionTypes, "Id", "Name", question.QuestionType);
+        //    ViewData["QuestionTypes"] = new SelectList(Enum.GetValues(typeof(QuestionType)), "Id", "Name", question.QuestionType);
         //    //return View();
         //    return RedirectToAction(nameof(Create), "Survey");
         //}
+        // POST: Questions/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind("Header,QuestionType,Option1,Option2,Option3,Option4,Option5,SurveyId")] QuestionModelView questionModelView)
+        {
+            if (ModelState.IsValid)
+            {
+                Question question = new Question();
+                question.Header = questionModelView.Header;
+                question.QuestionType = questionModelView.QuestionType;
+                question.SurveyId = Convert.ToInt32(questionModelView.SurveyId);
+                await questionRepo.CreateAsync(question);
+
+                if (!String.IsNullOrEmpty(questionModelView.Option1)) 
+                { 
+                    Option option1 = new Option { Name = questionModelView.Option1, QuestionId = question.Id };
+                    context.Options.Add(option1);
+                }
+                if (!String.IsNullOrEmpty(questionModelView.Option2))
+                {
+                    Option option2 = new Option { Name = questionModelView.Option2, QuestionId = question.Id };
+                    context.Options.Add(option2);
+                }
+                if (!String.IsNullOrEmpty(questionModelView.Option3))
+                {
+                    Option option3 = new Option { Name = questionModelView.Option3, QuestionId = question.Id };
+                    context.Options.Add(option3);
+                }
+                if (!String.IsNullOrEmpty(questionModelView.Option4))
+                { 
+                    Option option4 = new Option { Name = questionModelView.Option4, QuestionId = question.Id };
+                    context.Options.Add(option4);
+                }
+                if (!String.IsNullOrEmpty(questionModelView.Option5))
+                {
+                    Option option5 = new Option { Name = questionModelView.Option5, QuestionId = question.Id };
+                    context.Options.Add(option5);
+                }
+                context.SaveChanges();
+            }
+            //return View();
+            return RedirectToAction(nameof(Create), "Survey");
+        }
         // GET: Questions /Edit/5
         public ActionResult Edit(int id)
         {

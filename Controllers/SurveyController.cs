@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace Survey.Controllers
 {
-    [ApiController]
-    [Route("{survey}")]
+    //[ApiController]
+    //[Route("{survey}")]
     public class SurveyController : Controller
     {
         private readonly ISurveyRepository surveyRepo;
@@ -47,6 +47,7 @@ namespace Survey.Controllers
         }
         //Get All Surveys
         [HttpGet]
+        [Route("{survey}")]
         [Route("AllSurveys")]
         public ActionResult AllSurveys()
         {
@@ -70,20 +71,26 @@ namespace Survey.Controllers
         //[HttpPost]
         // [ValidateAntiForgeryToken]
         //Company company
+       
         public async Task<IActionResult> Create()
         {
             Models.Survey survey = new Models.Survey();
-            //if (ModelState.IsValid)
-            //{
-            //    survey.QuestionsCount = 0;
-            //    survey.CompanyId = 1;
-            //    survey.CompanyName = "Rayan";
-            //    //survey.Company = surveyRepo.GetCompany(1,"Rayan");
-            //   // survey.status = Status.Draft;
-            //    await surveyRepo.CreateAsync(survey);
-            //    //return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["QuestionTypes"] = new SelectList(surveyRepo.GetQuestionTypes(), "Id", "Name");
+            if (ModelState.IsValid)
+            {
+                survey.QuestionsCount = 0;
+                survey.CompanyId = "1";
+                survey.status = Status.Draft;
+                await surveyRepo.CreateAsync(survey);
+                //return RedirectToAction(nameof(Index));
+            }
+            var enumData = from QuestionType e in Enum.GetValues(typeof(QuestionType))
+                           select new
+                           {
+                               Id = (int)e,
+                               Name = e.ToString()
+                           };
+            ViewData["QuestionTypes"] = new SelectList(enumData,"Id","Name");
+            ViewData["SurveyId"] = survey.Id;
             return View();
         }
 
