@@ -11,9 +11,7 @@ namespace Survey.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string AnswerText { get; set; }
-        [Range(1,5)]
         public int AnswerValue { get; set; }
         public bool AnswerBool { get; set; }
         public int QuestionId { get; set; }
