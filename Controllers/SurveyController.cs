@@ -24,8 +24,6 @@ namespace Survey.Controllers
         // GET: Survey
         public async Task<IActionResult> Index()
         {
-            //var Surveys = surveyRepo.RealAllIncludeCompany();
-            //return View(await Surveys);
             return View();
         }
 
@@ -37,7 +35,7 @@ namespace Survey.Controllers
                 return NotFound();
             }
 
-            var survay = await surveyRepo.ReadById(id);
+            var survay = await surveyRepo.ReadByIdAsync(id);
             if (survay == null)
             {
                 return NotFound();
@@ -61,9 +59,14 @@ namespace Survey.Controllers
 
             return View(surveys);
         }
-        //// GET: Survey/Create
-        //public ActionResult Create()
+        // GET: Survey/Create
+        // [Route("{surveyId}", Name = "NiceUrlForVehicleMakeLookup")]
+        //[Route("{surveyId}")]
+        //public async Task<IActionResult> Create(string surveyId)
         //{
+        //    Models.Survey survay = await surveyRepo.ReadByIdAsync(Convert.ToInt32(surveyId));
+        //    survay.status = Status.Active;
+        //    survay.QuestionsCount = survay.QuestionsCount + 1;
         //    return View();
         //}
 
@@ -71,18 +74,33 @@ namespace Survey.Controllers
         //[HttpPost]
         // [ValidateAntiForgeryToken]
         //Company company
-       
+
         public async Task<IActionResult> Create()
         {
-            Models.Survey survey = new Models.Survey();
-            if (ModelState.IsValid)
+            int SurveyId = 0;
+            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
+
+            if (SurveyId == 0)
             {
-                survey.QuestionsCount = 0;
-                survey.CompanyId = "1";
-                survey.status = Status.Draft;
-                await surveyRepo.CreateAsync(survey);
-                //return RedirectToAction(nameof(Index));
+                Models.Survey survey = new Models.Survey();
+                if (ModelState.IsValid)
+                {
+                    survey.QuestionsCount = 0;
+                    survey.CompanyId = "1";
+                    survey.status = Status.Draft;
+                    await surveyRepo.CreateAsync(survey);
+                    //ViewData["SurveyId"] = survey.Id;
+                    HttpContext.Session.SetInt32("SurveyId", survey.Id);
+                }
             }
+            else
+            {
+                Models.Survey survey = await surveyRepo.ReadByIdAsync(SurveyId);
+                survey.status = Status.Active;
+                //survey.QuestionsCount = survey.QuestionsCount + 1;
+                await surveyRepo.UpdateAsync(survey);
+            }
+            
             var enumData = from QuestionType e in Enum.GetValues(typeof(QuestionType))
                            select new
                            {
@@ -90,10 +108,10 @@ namespace Survey.Controllers
                                Name = e.ToString()
                            };
             ViewData["QuestionTypes"] = new SelectList(enumData,"Id","Name");
-            ViewData["SurveyId"] = survey.Id;
+           
             return View();
         }
-
+      
         //// GET: SurveyController/Edit/5
         //public ActionResult Edit(int id)
         //{

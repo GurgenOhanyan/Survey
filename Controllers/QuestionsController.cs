@@ -25,7 +25,18 @@ namespace Survey.Controllers
         {
             return View();
         }
+        //Get All Questions
+        [HttpGet]
+        //[Route("{question}")]
+        //[Route("AllQuestions")]
+        public async Task<ActionResult> AllQuestions()
+        {
+            int SurveyId = 0;
+            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
 
+            var questions = await this.questionRepo.ReadAllBySurvey(SurveyId);
+            return View(questions);
+        }
         // GET: QuestionsController/Details/5
         public ActionResult Details(int id)
         {
@@ -40,31 +51,24 @@ namespace Survey.Controllers
         //}
 
         // POST: Questions/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Create([Bind("Id,Header,QuestionType")] Question question)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await questionRepo.CreateAsync(question);
-        //        return RedirectToAction(nameof(Create), "Survey");
-        //    }
-
-        //    ViewData["QuestionTypes"] = new SelectList(Enum.GetValues(typeof(QuestionType)), "Id", "Name", question.QuestionType);
-        //    //return View();
-        //    return RedirectToAction(nameof(Create), "Survey");
-        //}
-        // POST: Questions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Header,QuestionType,Option1,Option2,Option3,Option4,Option5,SurveyId")] QuestionModelView questionModelView)
+        public async Task<ActionResult> Create([Bind("Header,QuestionType,Option1,Option2,Option3,Option4,Option5")] QuestionModelView questionModelView)
         {
+            // int SurveyId = Convert.ToInt32(questionModelView.SurveyId);
+            int SurveyId = 0;
+            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId =  Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
+       
             if (ModelState.IsValid)
             {
+                if(questionModelView.Header==null)
+                {
+                    throw new Exception("Please insert the question title");
+                }
                 Question question = new Question();
                 question.Header = questionModelView.Header;
                 question.QuestionType = questionModelView.QuestionType;
-                question.SurveyId = Convert.ToInt32(questionModelView.SurveyId);
+                question.SurveyId = SurveyId;
                 await questionRepo.CreateAsync(question);
 
                 if (!String.IsNullOrEmpty(questionModelView.Option1)) 
@@ -95,7 +99,9 @@ namespace Survey.Controllers
                 context.SaveChanges();
             }
             //return View();
-            return RedirectToAction(nameof(Create), "Survey");
+            //return RedirectToAction("Create", "Survey", new { surveyId = questionModelView.SurveyId });
+            return RedirectToAction("Create", "Survey", new { surveyId = SurveyId });
+            // return RedirectToRoute("NiceUrlForVehicleMakeLookup");
         }
         // GET: Questions /Edit/5
         public ActionResult Edit(int id)

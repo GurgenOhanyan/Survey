@@ -37,14 +37,14 @@ namespace Survey.Models.Repository
             return this.context.Survey.ToList();
         }
 
-        public async Task<Survey> ReadById(int? id)
+        public async Task<Survey> ReadByIdAsync(int? id)
         {
             return await context.Survey.Include(o=>o.Company).FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public Survey ReadById(int id)
         {
-            throw new NotImplementedException();
+            return this.context.Survey.Find(id);
         }
 
         public async Task<List<Survey>> RealAllIncludeCompany()
@@ -60,7 +60,7 @@ namespace Survey.Models.Repository
 
             trackedEntity.Questions = entity.Questions;
             trackedEntity.QuestionsCount = entity.QuestionsCount;
-            trackedEntity.status = Status.Completed;
+            trackedEntity.status = entity.status;
 
             //if (entity.Id != 0 && string.IsNullOrEmpty(entity.CompanyName))
             //{

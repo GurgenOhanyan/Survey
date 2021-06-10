@@ -8,7 +8,8 @@ namespace Survey.Models
     public enum Status
     {
         Draft = 1,
-        Completed = 2
+        Active = 2,
+        Completed = 3
     }
     public class Statuses
     {
