@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Survey.Data;
 using Survey.Models;
 using Survey.Models.Repository;
+using Survey.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,21 +33,29 @@ namespace Survey
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("CompanyDatabase")));
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IOptionsRepository, OptionsRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
             services.AddScoped<IParticipantRepository, ParticipantRepository>();
-            services.AddIdentity<Company,Role>(options => options.SignIn.RequireConfirmedAccount = true)
+            //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddIdentity<Company,Role>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit =false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase =false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            });
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
                               IWebHostEnvironment env,
