@@ -134,7 +134,6 @@ namespace Survey.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("AnswerText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AnswerValue")

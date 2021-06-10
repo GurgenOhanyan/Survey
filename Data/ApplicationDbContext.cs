@@ -27,9 +27,9 @@ namespace Survey.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Answer>()
-                .HasIndex(answer => new { answer.QuestionId, answer.Participant })
-                .IsUnique();
+            //modelBuilder.Entity<Answer>()
+            //    .HasIndex(answer => new { answer.QuestionId, answer.Participant })
+            //    .IsUnique();
 
             modelBuilder.Entity<QuestionTypes>()
                 .Property(q => q.Name).HasConversion<string>();

@@ -31,7 +31,7 @@ namespace Survey
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("CompanyDatabase")));
 
             services.AddScoped<IOptionsRepository, OptionsRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();

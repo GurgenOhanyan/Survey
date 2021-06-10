@@ -86,6 +86,7 @@ namespace Survey.Areas.Identity.Pages.Account
             {
                 var user = new Company
                 {
+                    UserName=Input.Name,
                     Name = Input.Name,
                     Country = Input.Country,
                     Email=Input.Email,
