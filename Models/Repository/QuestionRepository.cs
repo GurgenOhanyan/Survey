@@ -43,6 +43,11 @@ namespace Survey.Models.Repository
             return this.context.Questions.ToList();
         }
 
+        public async Task<List<Question>> ReadAllBySurvey(int surveyId)
+        {
+            return await this.context.Questions.Where(o => o.SurveyId == surveyId).ToListAsync();
+        }
+
         public Question ReadById(int id)
         {
             return this.context.Questions.Find(id);

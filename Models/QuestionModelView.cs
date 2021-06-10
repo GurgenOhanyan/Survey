@@ -16,6 +16,6 @@ namespace Survey.Models
         public string Option4 { get; set; }
         public string Option5 { get; set; }
         
-        public string SurveyId { get; set; }
+        //public string SurveyId { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace Survey.Models.Repository
     public interface IQuestionRepository : IRepository<Question, int>
     {
         public Task<Question> CreateAsync(Question entity);
+        public Task<List<Question>> ReadAllBySurvey(int serveyId);
     }
 }
