@@ -59,16 +59,6 @@ namespace Survey.Controllers
 
             return View(surveys);
         }
-        // GET: Survey/Create
-        // [Route("{surveyId}", Name = "NiceUrlForVehicleMakeLookup")]
-        //[Route("{surveyId}")]
-        //public async Task<IActionResult> Create(string surveyId)
-        //{
-        //    Models.Survey survay = await surveyRepo.ReadByIdAsync(Convert.ToInt32(surveyId));
-        //    survay.status = Status.Active;
-        //    survay.QuestionsCount = survay.QuestionsCount + 1;
-        //    return View();
-        //}
 
         // POST: Survey/Create
         //[HttpPost]
@@ -89,7 +79,6 @@ namespace Survey.Controllers
                     survey.CompanyId = "1";
                     survey.status = Status.Draft;
                     await surveyRepo.CreateAsync(survey);
-                    //ViewData["SurveyId"] = survey.Id;
                     HttpContext.Session.SetInt32("SurveyId", survey.Id);
                 }
             }
@@ -97,7 +86,6 @@ namespace Survey.Controllers
             {
                 Models.Survey survey = await surveyRepo.ReadByIdAsync(SurveyId);
                 survey.status = Status.Active;
-                //survey.QuestionsCount = survey.QuestionsCount + 1;
                 await surveyRepo.UpdateAsync(survey);
             }
             
@@ -112,65 +100,8 @@ namespace Survey.Controllers
             return View();
         }
       
-        //// GET: SurveyController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
 
-        // POST: Survey/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Models.Survey survey)
-        {
-            if (id != survey.Id)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
-        {
-                try
-                {
-                    await surveyRepo.UpdateAsync(survey);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!surveyRepo.SurveyExists(survey.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
 
-                return View(survey);
-
-            }
-            return View(survey);
-        }
-
-        // GET: SurveyController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-            
-        // POST: SurveyController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
