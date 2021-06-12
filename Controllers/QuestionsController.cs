@@ -27,37 +27,31 @@ namespace Survey.Controllers
         }
         //Get All Questions
         [HttpGet]
-        //[Route("{question}")]
-        //[Route("AllQuestions")]
         public async Task<ActionResult> AllQuestions()
         {
             int SurveyId = 0;
-            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
-
+            
+            if (HttpContext.Session.GetInt32("SurveyId") != null)
+            {
+                SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
+                
+                Models.Survey survey = context.Survey.Find(SurveyId);
+                survey.status = Status.Completed;
+                survey.QuestionsCount = this.context.Questions.Where(o => o.SurveyId == SurveyId).Count();
+                context.Survey.Update(survey);
+                await context.SaveChangesAsync();
+            }
             var questions = await this.questionRepo.ReadAllBySurvey(SurveyId);
             return View(questions);
         }
-        // GET: QuestionsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //// GET: QuestionsController/Create
-        //public ActionResult Create()
-        //{
-        //    ViewData["QuestionTypes"] = new SelectList(Enum.GetValues(typeof(QuestionType)), "Id", "Name");
-        //    return View();
-        //}
 
         // POST: Questions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind("Header,QuestionType,Option1,Option2,Option3,Option4,Option5")] QuestionModelView questionModelView)
         {
-            // int SurveyId = Convert.ToInt32(questionModelView.SurveyId);
             int SurveyId = 0;
-            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId =  Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
+            if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
        
             if (ModelState.IsValid)
             {
@@ -98,30 +92,7 @@ namespace Survey.Controllers
                 }
                 context.SaveChanges();
             }
-            //return View();
-            //return RedirectToAction("Create", "Survey", new { surveyId = questionModelView.SurveyId });
             return RedirectToAction("Create", "Survey", new { surveyId = SurveyId });
-            // return RedirectToRoute("NiceUrlForVehicleMakeLookup");
-        }
-        // GET: Questions /Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: QuestionsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: QuestionsController/Delete/5

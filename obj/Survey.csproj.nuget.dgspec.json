@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Source\\Repos\\6.Survey\\Survey.csproj": {}
+    "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Source\\Repos\\6.Survey\\Survey.csproj": {
+    "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\6.Survey\\Survey.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj",
         "projectName": "Survey",
-        "projectPath": "C:\\Users\\User\\Source\\Repos\\6.Survey\\Survey.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Source\\Repos\\6.Survey\\obj\\",
+        "projectPath": "C:\\Users\\user\\Source\\Repos\\Survey\\Survey.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Source\\Repos\\Survey\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -88,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -9,10 +9,16 @@ namespace Survey.Models
     public class Participant
     {
         public int Id { get; set; }
+
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
-        public string Lastname { get; set; }
+
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
         [DataType(DataType.Date)]
+        [Display(Name = "Birth date")]
         public DateTime BirthDate { get; set; }
-        public List<Answer> Answers  { get; set; }
+        public List<Answer> Answers { get; set; }
     }
 }

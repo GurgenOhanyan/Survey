@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>All Surveys in DataBase</h1>
+<h1>All Surveys</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -44,9 +44,7 @@
                 @Html.DisplayFor(modelItem => item.Company.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-action="Fill" asp-route-id="@item.Id">Fill</a>
             </td>
         </tr>
 }
