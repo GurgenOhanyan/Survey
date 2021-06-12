@@ -26,6 +26,10 @@ namespace Survey.Models.Repository
             await this.context.SaveChangesAsync();
             return entity;
         }
+        public IEnumerable<Question> SurveyQuestions(int surveyId)
+        {
+            return this.context.Questions.Where(o => o.SurveyId == surveyId).ToList();
+        }
 
         public void Delete(Question entity)
         {

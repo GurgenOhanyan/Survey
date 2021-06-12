@@ -34,7 +34,8 @@ namespace Survey.Models.Repository
 
         public IList<Survey> ReadAll()
         {
-            return this.context.Survey.ToList();
+            return this.context.Survey
+                .Include(a => a.Company).ToList();
         }
 
         public async Task<Survey> ReadByIdAsync(int? id)

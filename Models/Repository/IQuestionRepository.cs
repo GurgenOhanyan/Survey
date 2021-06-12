@@ -9,5 +9,6 @@ namespace Survey.Models.Repository
     {
         public Task<Question> CreateAsync(Question entity);
         public Task<List<Question>> ReadAllBySurvey(int serveyId);
+        public IEnumerable<Question> SurveyQuestions(int surveyId);
     }
 }

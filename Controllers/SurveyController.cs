@@ -45,8 +45,8 @@ namespace Survey.Controllers
         }
         //Get All Surveys
         [HttpGet]
-        [Route("{survey}")]
-        [Route("AllSurveys")]
+        //[Route("{survey}")]
+        //[Route("AllSurveys")]
         public ActionResult AllSurveys()
         {
             var surveys = this.surveyRepo.ReadAll();
@@ -99,9 +99,10 @@ namespace Survey.Controllers
            
             return View();
         }
-      
 
-
-
+        public ActionResult Fill(int id)
+        { 
+            return RedirectToAction("CreateAnswersforSurvey", "Answers", new { surveyId = id, participantId = 1});
+        }
     }
 }
