@@ -45,6 +45,7 @@ namespace Survey
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
