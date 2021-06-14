@@ -18,15 +18,13 @@ namespace Survey.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<Company> _userManager;
         private readonly SignInManager<Company> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<Company> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<Company> userManager)
+            ILogger<LoginModel> logger
+           )
         {
-            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -63,8 +61,7 @@ namespace Survey.Areas.Identity.Pages.Account
             }
 
             returnUrl = returnUrl ?? Url.Content("~/");
-
-            // Clear the existing external cookie to ensure a clean login process
+           // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -101,7 +98,9 @@ namespace Survey.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-
+            //sign-in problem ,resolved with signinmanager
+             //*******************
+            //if(_signInManager.IsSignedIn)
             // If we got this far, something failed, redisplay form
             return Page();
         }

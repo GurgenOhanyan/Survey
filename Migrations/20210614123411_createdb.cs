@@ -44,9 +44,7 @@ namespace Survey.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
-                    Industry = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    RepeatPassword = table.Column<string>(nullable: true)
+                    Industry = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,7 +58,7 @@ namespace Survey.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
-                    Lastname = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -235,21 +233,21 @@ namespace Survey.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerText = table.Column<string>(nullable: false),
-                    AnswerValue = table.Column<int>(nullable: false),
-                    AnswerBool = table.Column<bool>(nullable: false),
+                    AnswerText = table.Column<string>(nullable: true),
+                    AnswerValue = table.Column<int>(nullable: true),
+                    AnswerBool = table.Column<bool>(nullable: true),
                     QuestionId = table.Column<int>(nullable: false),
-                    ParticipantId = table.Column<int>(nullable: true)
+                    ParticipantID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answers_Participants_ParticipantId",
-                        column: x => x.ParticipantId,
+                        name: "FK_Answers_Participants_ParticipantID",
+                        column: x => x.ParticipantID,
                         principalTable: "Participants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Answers_Questions_QuestionId",
                         column: x => x.QuestionId,
@@ -279,9 +277,9 @@ namespace Survey.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_ParticipantId",
+                name: "IX_Answers_ParticipantID",
                 table: "Answers",
-                column: "ParticipantId");
+                column: "ParticipantID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",

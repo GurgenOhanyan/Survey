@@ -86,17 +86,17 @@ namespace Survey.Areas.Identity.Pages.Account
             {
                 var user = new Company
                 {
-                    UserName=Input.Name,
+                    UserName=Input.Email,
                     Name = Input.Name,
                     Country = Input.Country,
                     Email=Input.Email,
                     Industry=Input.Industry,
-                    Password=Input.Password,
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+
+                    //await _emailSender.SendEmailAsync(user.Email,"successfuly registereg","< b > This text is bold </ b >");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -118,10 +118,11 @@ namespace Survey.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
