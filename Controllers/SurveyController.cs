@@ -17,9 +17,11 @@ namespace Survey.Controllers
     public class SurveyController : Controller
     {
         private readonly ISurveyRepository surveyRepo;
-        public SurveyController(ISurveyRepository surveyRepository)
+        private readonly ApplicationDbContext context;
+        public SurveyController(ApplicationDbContext context, ISurveyRepository surveyRepository)
         {
             surveyRepo = surveyRepository;
+            this.context = context;
         }
         // GET: Survey
         public async Task<IActionResult> Index()
@@ -35,7 +37,13 @@ namespace Survey.Controllers
                 return NotFound();
             }
 
-            var survay = await surveyRepo.ReadByIdAsync(id);
+            //var survay = await surveyRepo.ReadByIdAsync(id);
+            var survay = await context.Survey
+                .Include(q => q.Questions)
+
+
+                .FirstOrDefaultAsync(s => s.Id == id);
+
             if (survay == null)
             {
                 return NotFound();
@@ -50,13 +58,6 @@ namespace Survey.Controllers
         public ActionResult AllSurveys()
         {
             var surveys = this.surveyRepo.ReadAll();
-
-            //temporory list for tests
-            //var surveys = new List<Models.Survey>();
-            //surveys.Add(new Models.Survey { Id = 1, Company = new Models.Company(), CompanyId = 2, CompanyName = "TROSIFOL", Questions = null, QuestionsCount = 3 });
-            //surveys.Add(new Models.Survey { Id = 2, Company = new Models.Company(), CompanyId = 225, CompanyName = "ALUTECH", Questions = null, QuestionsCount = 8 });
-            //surveys.Add(new Models.Survey { Id = 3, Company = new Models.Company(), CompanyId = 21, CompanyName = "MACO", Questions = null, QuestionsCount = 7 });
-
             return View(surveys);
         }
 
