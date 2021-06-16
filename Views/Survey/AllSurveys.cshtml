@@ -10,47 +10,44 @@
 
 <h1>All Surveys</h1>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.QuestionsCount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Company.Name)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.QuestionsCount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company.Name)
-                </td>
-                <td>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuestionsCount)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Company.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionsCount)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.Name)
+            </td>
+            <td>
                     <a asp-action="AllQuestions" asp-controller="Questions" asp-route-id="@item.Id">Questions</a>
-                </td>
-                <td>
-                    <a asp-action="Fill" asp-route-id="@item.Id">Fill</a>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+                <a asp-action="Fill" asp-route-id="@item.Id">Fill</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -10,8 +10,8 @@ using Survey.Data;
 namespace Survey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210607191338_createdb")]
-    partial class createdb
+    [Migration("20210614103545_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,17 +132,16 @@ namespace Survey.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("AnswerBool")
+                    b.Property<bool?>("AnswerBool")
                         .HasColumnType("bit");
 
                     b.Property<string>("AnswerText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AnswerValue")
+                    b.Property<int?>("AnswerValue")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParticipantId")
+                    b.Property<int>("ParticipantID")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionId")
@@ -150,7 +149,7 @@ namespace Survey.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParticipantId");
+                    b.HasIndex("ParticipantID");
 
                     b.HasIndex("QuestionId");
 
@@ -270,7 +269,7 @@ namespace Survey.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Lastname")
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -429,7 +428,9 @@ namespace Survey.Migrations
                 {
                     b.HasOne("Survey.Models.Participant", "Participant")
                         .WithMany("Answers")
-                        .HasForeignKey("ParticipantId");
+                        .HasForeignKey("ParticipantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Survey.Models.Question", "Question")
                         .WithMany("Answers")

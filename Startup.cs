@@ -33,7 +33,7 @@ namespace Survey
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("CompanyDatabase")));
 
             services.AddScoped<IOptionsRepository, OptionsRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
@@ -47,6 +47,15 @@ namespace Survey
                 .AddDefaultTokenProviders();
             services.AddSession();
             services.AddControllersWithViews();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.SignIn.RequireConfirmedEmail = false;
+            });
             services.AddRazorPages();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +84,7 @@ namespace Survey
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
+            //app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

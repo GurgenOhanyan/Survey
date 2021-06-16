@@ -18,9 +18,11 @@ namespace Survey.Controllers
     public class SurveyController : Controller
     {
         private readonly ISurveyRepository surveyRepo;
-        public SurveyController(ISurveyRepository surveyRepository)
+        private readonly ApplicationDbContext context;
+        public SurveyController(ApplicationDbContext context, ISurveyRepository surveyRepository)
         {
             surveyRepo = surveyRepository;
+            this.context = context;
         }
         // GET: Survey
         public async Task<IActionResult> Index()
@@ -36,7 +38,13 @@ namespace Survey.Controllers
                 return NotFound();
             }
 
-            var survay = await surveyRepo.ReadByIdAsync(id);
+            //var survay = await surveyRepo.ReadByIdAsync(id);
+            var survay = await context.Survey
+                .Include(q => q.Questions)
+
+
+                .FirstOrDefaultAsync(s => s.Id == id);
+
             if (survay == null)
             {
                 return NotFound();
@@ -71,7 +79,7 @@ namespace Survey.Controllers
                 if (ModelState.IsValid)
                 {
                     survey.QuestionsCount = 0;
-                    survey.CompanyId = "1";// User.Claims.First().Value;
+                    survey.CompanyId = User.Claims.First().Value;
                     survey.status = Status.Draft;
                     await surveyRepo.CreateAsync(survey);
                     HttpContext.Session.SetInt32("SurveyId", survey.Id);
