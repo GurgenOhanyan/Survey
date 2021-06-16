@@ -33,14 +33,14 @@ namespace Survey
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefalutConnection")));
 
             services.AddScoped<IOptionsRepository, OptionsRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
             services.AddScoped<IParticipantRepository, ParticipantRepository>();
-            //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddIdentity<Company,Role>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
@@ -49,12 +49,16 @@ namespace Survey
             services.AddControllersWithViews();
             services.Configure<IdentityOptions>(options =>
             {
+                options.User.RequireUniqueEmail = true;
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Password.RequiredLength = 5;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireDigit = false;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
             });
             services.AddRazorPages();
         }
