@@ -41,13 +41,9 @@ namespace Survey.Controllers
                 context.Survey.Update(survey);
                 await context.SaveChangesAsync();
             }
-            return RedirectToAction("AllQuestions", new { Id = SurveyId });
-        }
-        [HttpGet]
-        public async Task<ActionResult> AllQuestions(int Id)
-        {
-            var questions = await this.questionRepo.ReadAllBySurvey(Id);
-            return View(questions);
+            //return RedirectToAction("AllQuestions", new { Id = SurveyId });
+            return RedirectToAction("Details","Survey" , new { Id = SurveyId });
+            
         }
         // POST: Questions/Create
         [HttpPost]
