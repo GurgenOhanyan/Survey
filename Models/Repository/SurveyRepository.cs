@@ -37,7 +37,11 @@ namespace Survey.Models.Repository
             return this.context.Survey
                 .Include(a => a.Company).ToList();
         }
-
+        public async Task<IList<Survey>> ReadAllCompleatedAsync()
+        {
+            return await this.context.Survey
+                .Include(a => a.Company).Where(o=>o.status == Status.Completed).ToListAsync();
+        }
         public async Task<Survey> ReadByIdAsync(int? id)
         {
             return await context.Survey.Include(o=>o.Company).FirstOrDefaultAsync(m => m.Id == id);

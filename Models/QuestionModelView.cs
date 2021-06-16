@@ -8,6 +8,7 @@ namespace Survey.Models
 {
     public class QuestionModelView
     {
+        [Required(ErrorMessage = "Header is Required")]
         public string Header { get; set; }
         public QuestionType QuestionType { get; set; }
         public string Option1 { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -47,16 +48,10 @@ namespace Survey.Controllers
         [HttpGet]
         //[Route("{survey}")]
         //[Route("AllSurveys")]
-        public ActionResult AllSurveys()
+        public async Task<ActionResult> AllSurveys()
         {
-            var surveys = this.surveyRepo.ReadAll();
-
-            //temporory list for tests
-            //var surveys = new List<Models.Survey>();
-            //surveys.Add(new Models.Survey { Id = 1, Company = new Models.Company(), CompanyId = 2, CompanyName = "TROSIFOL", Questions = null, QuestionsCount = 3 });
-            //surveys.Add(new Models.Survey { Id = 2, Company = new Models.Company(), CompanyId = 225, CompanyName = "ALUTECH", Questions = null, QuestionsCount = 8 });
-            //surveys.Add(new Models.Survey { Id = 3, Company = new Models.Company(), CompanyId = 21, CompanyName = "MACO", Questions = null, QuestionsCount = 7 });
-
+            //var surveys = this.surveyRepo.ReadAll();
+            var surveys = await this.surveyRepo.ReadAllCompleatedAsync();
             return View(surveys);
         }
 
@@ -76,7 +71,7 @@ namespace Survey.Controllers
                 if (ModelState.IsValid)
                 {
                     survey.QuestionsCount = 0;
-                    survey.CompanyId = "1";
+                    survey.CompanyId = "1";// User.Claims.First().Value;
                     survey.status = Status.Draft;
                     await surveyRepo.CreateAsync(survey);
                     HttpContext.Session.SetInt32("SurveyId", survey.Id);
