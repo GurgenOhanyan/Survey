@@ -33,7 +33,7 @@ namespace Survey
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("CompanyDatabase")));
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IOptionsRepository, OptionsRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
@@ -84,7 +84,7 @@ namespace Survey
 
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseSession();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

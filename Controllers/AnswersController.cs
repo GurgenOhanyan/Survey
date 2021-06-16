@@ -4,6 +4,7 @@ using Survey.Data;
 using Survey.Models;
 using Survey.Models.Repository;
 using System;
+using System.Collections.Generic;
 
 namespace Survey.Controllers
 {
@@ -27,10 +28,22 @@ namespace Survey.Controllers
             return View(answers);
         }
 
+
         // GET: AnswersController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var answer = answerRepository.ReadById(id);
+            if (answer == null)
+            {
+                return NotFound();
+            }
+            return View(answer);
+            //return View();
         }
 
         // GET: AnswersController/Create
@@ -63,16 +76,18 @@ namespace Survey.Controllers
         // POST: AnswersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, /*[Bind("Id, AnswerText, AnswerValue, AnswerBool")]*/ Answer answer/*IFormCollection collection*/)
         {
-            try
+            if (id != answer.Id)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+
+            answerRepository.Update(answer);
+            context.SaveChangesAsync();
+
+            return View();
+
         }
 
         // GET: AnswersController/Delete/5
@@ -129,20 +144,6 @@ namespace Survey.Controllers
             return View(answer);
         }
 
-
-        ////hin
-        //public ActionResult CreateAnswersforSurvey(int surveyId, int participantId)
-        //{
-        //    var questions = questionRepository.SurveyQuestions(surveyId);
-
-        //    foreach (var item in questions)
-        //    {
-        //        CreatAnswerForQuestion(item.Id, participantId);
-        //    }
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //nor
         [HttpGet]
         public ActionResult CreateAnswersforSurvey(int surveyId, int participantId)
         {
@@ -150,18 +151,25 @@ namespace Survey.Controllers
 
             foreach (var item in questions)
             {
-                if (item.QuestionType is QuestionType.Options)
-                    answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerValue = 0 });
-
-                if (item.QuestionType is QuestionType.YesNo)
-                    answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerBool = false });
-
-                if (item.QuestionType is QuestionType.Text)
-                    answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerText = "" });
+                Answer temp = answerRepository.CreateAnswerForQuestion(item.Id, participantId);
             }
+            //return RedirectToAction(nameof(Edit), new { id = participantId});
 
-            var answers = answerRepository.GetAnswersBySurbeyID(surveyId);
-            return View(answers);
+            List<Answer> answers = new List<Answer>();
+            answers = (List<Answer>)answerRepository.GetAnswersBySurveyID(surveyId);
+                return View(answers);
+
+            //foreach (var item in questions)
+            //{
+            //    if (item.QuestionType is QuestionType.Options)
+            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerValue = 0 });
+
+            //    if (item.QuestionType is QuestionType.YesNo)
+            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerBool = false });
+
+            //    if (item.QuestionType is QuestionType.Text)
+            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerText = string.Empty });
+            //}
         }
     }
 }

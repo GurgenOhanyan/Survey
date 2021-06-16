@@ -40,8 +40,6 @@ namespace Survey.Controllers
             //var survay = await surveyRepo.ReadByIdAsync(id);
             var survay = await context.Survey
                 .Include(q => q.Questions)
-
-
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (survay == null)

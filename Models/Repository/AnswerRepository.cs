@@ -22,17 +22,17 @@ namespace Survey.Models.Repository
             return entity;
         }
 
-        public int CreateAnswerForQuestion(int questionId, int participantId)
+        public Answer CreateAnswerForQuestion(int questionId, int participantId)
         {
             Answer answer = new Answer();
             answer.AnswerBool = false;
-            answer.AnswerText = "";
+            answer.AnswerText = string.Empty;
             answer.AnswerValue = 0;
-            answer.Participant.Id = participantId;
+            answer.ParticipantID = participantId;
             answer.QuestionId = questionId;
 
             Create(answer);
-            return answer.Id;
+            return answer;
         }
 
         public int CreateAnswersforSurvey(int surveyId, int participantId = 1)
@@ -64,7 +64,7 @@ namespace Survey.Models.Repository
 
         }
 
-        public IList<Answer> GetAnswersBySurbeyID(int id)
+        public IList<Answer> GetAnswersBySurveyID(int id)
         {
             return this.context.Answers.Where(a => a.Question.SurveyId == id).ToList();
         }
@@ -87,7 +87,15 @@ namespace Survey.Models.Repository
 
         public Answer Update(Answer entity)
         {
-            throw new NotImplementedException();
+            Answer trackedEntity = this.context.Answers.Find(entity.Id);
+
+            trackedEntity.AnswerBool = entity.AnswerBool;
+            trackedEntity.AnswerText = entity.AnswerText;
+            trackedEntity.AnswerValue = entity.AnswerValue;
+            trackedEntity.ParticipantID = entity.ParticipantID;
+
+            this.context.SaveChanges();
+            return trackedEntity;
         }
     }
 }
