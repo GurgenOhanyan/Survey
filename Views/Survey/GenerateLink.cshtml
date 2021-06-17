@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model String
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Company> SignInManager
+@inject UserManager<Company> UserManager
+
+@{
+    ViewData["Title"] = "Survey Link";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Survey Link</h1>
+
+
+<p>
+    <a href="@ViewBag.ReturnUrl">@ViewBag.ReturnUrl</a>
+</p>
