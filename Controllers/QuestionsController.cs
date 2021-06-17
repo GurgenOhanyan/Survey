@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ServiceStack.Host;
 using Survey.Data;
 using Survey.Models;
 using Survey.Models.Repository;
@@ -27,24 +28,23 @@ namespace Survey.Controllers
         }
         //Get All Questions
         [HttpGet]
-        public async Task<ActionResult> AllQuestions()
+        public async Task<ActionResult> SurveyCompleted()
         {
             int SurveyId = 0;
             
             if (HttpContext.Session.GetInt32("SurveyId") != null)
             {
                 SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
-                
                 Models.Survey survey = context.Survey.Find(SurveyId);
                 survey.status = Status.Completed;
                 survey.QuestionsCount = this.context.Questions.Where(o => o.SurveyId == SurveyId).Count();
                 context.Survey.Update(survey);
                 await context.SaveChangesAsync();
             }
-            var questions = await this.questionRepo.ReadAllBySurvey(SurveyId);
-            return View(questions);
+            //return RedirectToAction("AllQuestions", new { Id = SurveyId });
+            return RedirectToAction("Details","Survey" , new { Id = SurveyId });
+            
         }
-
         // POST: Questions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -53,17 +53,24 @@ namespace Survey.Controllers
             int SurveyId = 0;
             if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
        
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && SurveyId != 0)
             {
-                if(questionModelView.Header==null)
+                Models.Survey survey = context.Survey.Find(SurveyId);
+                if (survey.QuestionsCount == 10)
                 {
-                    throw new Exception("Please insert the question title");
+                   // ViewBag.Message = "The max count of questions are 10";
+                    return RedirectToAction("Create", "Survey");
+                }
+                if (questionModelView.Header == null)
+                {
+                    return RedirectToAction("Create", "Survey");
                 }
                 Question question = new Question();
                 question.Header = questionModelView.Header;
                 question.QuestionType = questionModelView.QuestionType;
                 question.SurveyId = SurveyId;
                 await questionRepo.CreateAsync(question);
+                survey.QuestionsCount = survey.QuestionsCount + 1;
 
                 if (!String.IsNullOrEmpty(questionModelView.Option1)) 
                 { 

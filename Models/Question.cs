@@ -10,7 +10,7 @@ namespace Survey.Models
     public class Question
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Header is Required")]
         public string Header { get; set; }
         public List<Option> Options { get; set; }
         public QuestionType QuestionType { get; set; }

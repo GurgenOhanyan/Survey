@@ -14,5 +14,6 @@ namespace Survey.Models.Repository
         public Task<Survey> UpdateAsync(Survey entity);
         public Company GetCompany(string id);
         public List<QuestionTypes> GetQuestionTypes();
+        public Task<IList<Survey>> ReadAllCompleatedAsync();
     }
 }
