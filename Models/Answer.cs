@@ -12,11 +12,10 @@ namespace Survey.Models
         public int Id { get; set; }
         [Display(Name = "Answer text")]
         public string AnswerText { get; set; }
-        [Range(1,5)]
-        [Display(Name = "Choice from 1..5")]
+        [Display(Name = "Choice option")]
         public int? AnswerValue { get; set; }
-        [Display(Name = "Yes or Mo")]
-        public bool? AnswerBool { get; set; }
+        [Display(Name = "Yes or No")]
+        public bool AnswerBool { get; set; }
         public int QuestionId { get; set; }
         public virtual Question Question { get; set; }
         public int ParticipantID { get; set; }

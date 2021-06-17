@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Survey.Models;
+using Survey.Services;
 
 namespace Survey.Areas.Identity.Pages.Account
 {
@@ -95,9 +96,6 @@ namespace Survey.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-
-                    //await _emailSender.SendEmailAsync(user.Email,"successfuly registereg","< b > This text is bold </ b >");
-
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
