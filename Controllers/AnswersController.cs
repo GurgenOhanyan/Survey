@@ -153,23 +153,10 @@ namespace Survey.Controllers
             {
                 Answer temp = answerRepository.CreateAnswerForQuestion(item.Id, participantId);
             }
-            //return RedirectToAction(nameof(Edit), new { id = participantId});
 
             List<Answer> answers = new List<Answer>();
             answers = (List<Answer>)answerRepository.GetAnswersBySurveyID(surveyId);
-                return View(answers);
-
-            //foreach (var item in questions)
-            //{
-            //    if (item.QuestionType is QuestionType.Options)
-            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerValue = 0 });
-
-            //    if (item.QuestionType is QuestionType.YesNo)
-            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerBool = false });
-
-            //    if (item.QuestionType is QuestionType.Text)
-            //        answerRepository.Create(new Answer() { ParticipantID = participantId, QuestionId = item.Id, AnswerText = string.Empty });
-            //}
+            return View(answers);
         }
     }
 }

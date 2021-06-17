@@ -15,7 +15,7 @@ namespace Survey.Models
         [Display(Name = "Choice option")]
         public int? AnswerValue { get; set; }
         [Display(Name = "Yes or No")]
-        public bool? AnswerBool { get; set; }
+        public bool AnswerBool { get; set; }
         public int QuestionId { get; set; }
         public virtual Question Question { get; set; }
         public int ParticipantID { get; set; }

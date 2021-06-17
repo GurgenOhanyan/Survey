@@ -10,7 +10,7 @@ namespace Survey.Models
         public string Header { get; set; }
         public QuestionType QuestionType { get; set; }
         public string AnswerText { get; set; }
-        public int? AnswerValue { get; set; }
-        public bool? AnswerBool { get; set; }
+        public int AnswerValue { get; set; }
+        public bool AnswerBool { get; set; }
     }
 }

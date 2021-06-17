@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Survey.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +65,13 @@ namespace Survey.Models.Repository
 
         public IList<Answer> GetAnswersBySurveyID(int id)
         {
-            return this.context.Answers.Where(a => a.Question.SurveyId == id).ToList();
+            return this.context.Answers.Where(a => a.Question.SurveyId == id)
+                .Include(q => q.Question)
+                .ThenInclude(q => q.Options)
+                .AsNoTracking()
+
+
+                .ToList();
         }
 
         public IList<Answer> GetSurveyAnswers(Participant participant)
