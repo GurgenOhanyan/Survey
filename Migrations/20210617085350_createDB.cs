@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Survey.Migrations
 {
-    public partial class createdb : Migration
+    public partial class createDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -235,7 +235,7 @@ namespace Survey.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AnswerText = table.Column<string>(nullable: true),
                     AnswerValue = table.Column<int>(nullable: true),
-                    AnswerBool = table.Column<bool>(nullable: true),
+                    AnswerBool = table.Column<bool>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false),
                     ParticipantID = table.Column<int>(nullable: false)
                 },

@@ -130,7 +130,7 @@ namespace Survey.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("AnswerBool")
+                    b.Property<bool>("AnswerBool")
                         .HasColumnType("bit");
 
                     b.Property<string>("AnswerText")

@@ -10,8 +10,8 @@ using Survey.Data;
 namespace Survey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614103545_new")]
-    partial class @new
+    [Migration("20210617085350_createDB")]
+    partial class createDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,7 +132,7 @@ namespace Survey.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("AnswerBool")
+                    b.Property<bool>("AnswerBool")
                         .HasColumnType("bit");
 
                     b.Property<string>("AnswerText")
@@ -198,9 +198,6 @@ namespace Survey.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -209,9 +206,6 @@ namespace Survey.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("RepeatPassword")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

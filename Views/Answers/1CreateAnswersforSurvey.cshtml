@@ -7,9 +7,9 @@
 
 <h1>Please fill below answers</h1>
 
-
-<form class="form-horizontal" method="post">
-
+<p>
+    <a asp-action="Index">Submit</a>
+</p>
     <table class="table">
         <thead>
             <tr>
@@ -59,15 +59,19 @@
                     <td>
                         @Html.DisplayFor(modelItem => modelItem[i].Participant.Id)
                     </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="form-group">
-        <div class="col-sm-2 col-sm-10" >
-            <button type="submit"class="btn-dark">Submit</button>
-        </div>
-    </div>
-</form>
 
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" action="CreateAnswersforSurvey" class="btn btn-default">Submit</button>
+    </div>
+</div>
 

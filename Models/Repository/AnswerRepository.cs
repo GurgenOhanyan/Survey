@@ -23,6 +23,12 @@ namespace Survey.Models.Repository
 
         public Answer CreateAnswerForQuestion(int questionId, int participantId)
         {
+            if (context.Answers.Where(a => (a.QuestionId == questionId && a.ParticipantID == participantId)).Any())
+            {
+                Answer b = context.Answers.Where(a => (a.QuestionId == questionId && a.ParticipantID == participantId)).FirstOrDefault();
+                return b;
+            }
+
             Answer answer = new Answer();
             answer.AnswerBool = false;
             answer.AnswerText = string.Empty;

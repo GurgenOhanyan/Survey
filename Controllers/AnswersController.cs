@@ -22,9 +22,12 @@ namespace Survey.Controllers
         }
 
         // GET: AnswersController
-        public ActionResult Index()
+        public ActionResult Index(List<Answer> answers)
         {
-            var answers = answerRepository.ReadAll();
+            //for (int i = 0; i < answers.Count; i++)
+            //{
+            //    answerRepository.Update(answers[i]);
+            //}
             return View(answers);
         }
 
@@ -111,39 +114,6 @@ namespace Survey.Controllers
             }
         }
 
-        public ActionResult CreatAnswerForQuestion(int questionId, int participantId)
-        {
-
-            Question q = questionRepository.ReadById(questionId);
-            TempData["Header"] = q.Header;
-            TempData["QuestionType"] = q.QuestionType;
-            TempData["QuestionId"] = q.Id;
-            TempData["participantId"] = participantId;
-
-
-            //Answer a = answerRepository.ReadById(1);
-            //questionId = 1;
-            Answer answer = new Answer();
-            answer.ParticipantID = participantId;
-            answer.QuestionId = questionId;
-
-            return View(answer);
-        }
-
-        [HttpPost]
-        public ActionResult CreatAnswerForQuestion(Answer answer)
-        {
-            answer.QuestionId = Convert.ToInt32(TempData["QuestionId"]);
-            answer.ParticipantID = Convert.ToInt32(TempData["participantId"]);
-
-            if (ModelState.IsValid)
-            {
-                answerRepository.Create(answer);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(answer);
-        }
-
         [HttpGet]
         public ActionResult CreateAnswersforSurvey(int surveyId, int participantId)
         {
@@ -156,6 +126,17 @@ namespace Survey.Controllers
 
             List<Answer> answers = new List<Answer>();
             answers = (List<Answer>)answerRepository.GetAnswersBySurveyID(surveyId);
+            return View(answers);
+        }
+
+        [HttpPost]
+        public ActionResult CreateAnswersforSurvey(List<Answer> answers)
+        {
+            for (int i = 0; i < answers.Count; i++)
+            {
+                answerRepository.Update(answers[i]);
+            }
+
             return View(answers);
         }
     }
