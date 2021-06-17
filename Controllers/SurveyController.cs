@@ -105,5 +105,11 @@ namespace Survey.Controllers
         { 
             return RedirectToAction("CreateAnswersforSurvey", "Answers", new { surveyId = id, participantId = 1});
         }
+        public ActionResult GenerateLink(int id)
+        {
+            var fullUrl = this.Url.Action("CreateAnswersforSurvey", "Answers", new { surveyId = id, participantId = 1 });
+            ViewBag.ReturnUrl = "https://localhost:5001" + fullUrl;
+            return View();
+        }
     }
 }
