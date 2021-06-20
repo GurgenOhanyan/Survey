@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ServiceStack.Host;
 using Survey.Data;
 using Survey.Models;
 using Survey.Models.Repository;
@@ -35,7 +33,7 @@ namespace Survey.Controllers
         public async Task<ActionResult> SurveyCompleted()
         {
             int SurveyId = 0;
-            
+
             if (HttpContext.Session.GetInt32("SurveyId") != null)
             {
                 SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
@@ -46,8 +44,8 @@ namespace Survey.Controllers
                 await context.SaveChangesAsync();
             }
             //return RedirectToAction("AllQuestions", new { Id = SurveyId });
-            return RedirectToAction("Details","Survey" , new { Id = SurveyId });
-            
+            return RedirectToAction("Details", "Survey", new { Id = SurveyId });
+
         }
         // POST: Questions/Create
         [HttpPost]
@@ -56,13 +54,13 @@ namespace Survey.Controllers
         {
             int SurveyId = 0;
             if (HttpContext.Session.GetInt32("SurveyId") != null) SurveyId = Convert.ToInt32(HttpContext.Session.GetInt32("SurveyId"));
-       
+
             if (ModelState.IsValid && SurveyId != 0)
             {
                 Models.Survey survey = context.Survey.Find(SurveyId);
                 if (survey.QuestionsCount == 10)
                 {
-                   // ViewBag.Message = "The max count of questions are 10";
+                    // ViewBag.Message = "The max count of questions are 10";
                     return RedirectToAction("Create", "Survey");
                 }
                 if (questionModelView.Header == null)
@@ -76,8 +74,8 @@ namespace Survey.Controllers
                 await questionRepo.CreateAsync(question);
                 survey.QuestionsCount = survey.QuestionsCount + 1;
 
-                if (!String.IsNullOrEmpty(questionModelView.Option1)) 
-                { 
+                if (!String.IsNullOrEmpty(questionModelView.Option1))
+                {
                     Option option1 = new Option { Name = questionModelView.Option1, QuestionId = question.Id };
                     context.Options.Add(option1);
                 }
@@ -92,7 +90,7 @@ namespace Survey.Controllers
                     context.Options.Add(option3);
                 }
                 if (!String.IsNullOrEmpty(questionModelView.Option4))
-                { 
+                {
                     Option option4 = new Option { Name = questionModelView.Option4, QuestionId = question.Id };
                     context.Options.Add(option4);
                 }
@@ -143,10 +141,10 @@ namespace Survey.Controllers
         [HttpPost]
         public ActionResult SurveyQuestions(List<Question> answers, string Fname, string Lname, DateTime Bdate, string[] inputs)
         {
-            if (Fname==null || Lname ==null || Bdate.Date.Year <1900)
+            if (Fname == null || Lname == null || Bdate.Date.Year < 1900)
                 return RedirectToAction("Allsurveys", "Survey");
-            Participant participant = context.Participants.Where(p => p.FirstName == Fname && 
-                                                                      p.LastName == Lname && 
+            Participant participant = context.Participants.Where(p => p.FirstName == Fname &&
+                                                                      p.LastName == Lname &&
                                                                       p.BirthDate == Bdate).FirstOrDefault();
 
             if (participant == null)
@@ -154,7 +152,7 @@ namespace Survey.Controllers
                 participant = new Participant() { FirstName = Fname, LastName = Lname, BirthDate = Bdate };
                 participantRepo.Add(participant);
             }
-                        
+
             int participantId = participant.Id;
 
             Answer tempAnswer;
@@ -176,7 +174,13 @@ namespace Survey.Controllers
                 answerRepo.Create(tempAnswer);
 
             }
-            return RedirectToAction("Allsurveys", "Survey");
+            TempData["name"] = Fname.ToString() + " " + Lname.ToString();
+            return RedirectToAction(nameof(Confirmation));
+        }
+
+        public ActionResult Confirmation()
+        {
+            return View();
         }
     }
 }
