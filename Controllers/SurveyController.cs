@@ -103,7 +103,7 @@ namespace Survey.Controllers
 
         public ActionResult Fill(int id)
         { 
-            return RedirectToAction("CreateAnswersforSurvey", "Answers", new { surveyId = id, participantId = 1});
+            return RedirectToAction("SurveyQuestions", "Questions", new { surveyId = id });
         }
         public ActionResult GenerateLink(int id)
         {

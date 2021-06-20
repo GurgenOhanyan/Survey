@@ -1,0 +1,69 @@
+﻿@model List<Question>
+
+@{
+    ViewData["Title"] = "SurveyQuestions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Survey N @ViewData["SurveyName"]</h1>
+
+
+<form class="form-horizontal" method="post">
+    <div>
+        <p>Enter your First name : <input type="text" name="Fname"/></p>
+        <p>Enter your Last name : <input type="text" name="Lname" /></p>
+        <p>Enter your Birth date : <input type="date" name="Bdate" /></p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Header)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].QuestionType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Answers)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem[i].Header)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => modelItem[i].QuestionType)
+                    </td>
+                    <td>
+                        @if (Model[i].QuestionType == QuestionType.Text)
+                        {
+                            @Html.TextBox("inputs")
+                        }
+                        else if (Model[i].QuestionType == QuestionType.YesNo)
+                        {
+                            @Html.DropDownList("inputs", new SelectList(Enum.GetValues(typeof(YesNo))))
+                        }
+                        else
+                        {
+                            @Html.DropDownList("inputs", new SelectList(Model[i].Options.Select(o=>o.Name)))
+                        }
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => modelItem[i].Id)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-2 col-sm-10">
+            <button type="submit" class="btn-dark">Submit</button>
+        </div>
+    </div>
+</form>
+

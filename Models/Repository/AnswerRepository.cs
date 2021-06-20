@@ -32,7 +32,7 @@ namespace Survey.Models.Repository
             Answer answer = new Answer();
             answer.AnswerBool = false;
             answer.AnswerText = string.Empty;
-            answer.AnswerValue = 0;
+            answer.AnswerValue = "";
             answer.ParticipantID = participantId;
             answer.QuestionId = questionId;
 

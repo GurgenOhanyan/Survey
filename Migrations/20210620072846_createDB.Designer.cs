@@ -10,7 +10,7 @@ using Survey.Data;
 namespace Survey.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210617085350_createDB")]
+    [Migration("20210620072846_createDB")]
     partial class createDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,14 +132,14 @@ namespace Survey.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("AnswerBool")
+                    b.Property<bool?>("AnswerBool")
                         .HasColumnType("bit");
 
                     b.Property<string>("AnswerText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AnswerValue")
-                        .HasColumnType("int");
+                    b.Property<string>("AnswerValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ParticipantID")
                         .HasColumnType("int");

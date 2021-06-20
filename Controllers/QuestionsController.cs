@@ -15,10 +15,14 @@ namespace Survey.Controllers
     public class QuestionsController : Controller
     {
         private readonly IQuestionRepository questionRepo;
+        private readonly IAnswerRepository answerRepo;
+        private readonly IParticipantRepository participantRepo;
         private readonly ApplicationDbContext context;
-        public QuestionsController(IQuestionRepository questionRepository, ApplicationDbContext dbContext)
+        public QuestionsController(IQuestionRepository questionRepository, IAnswerRepository answerRepository, IParticipantRepository participantRepository, ApplicationDbContext dbContext)
         {
             questionRepo = questionRepository;
+            answerRepo = answerRepository;
+            participantRepo = participantRepository;
             context = dbContext;
         }
         // GET: QuestionsController
@@ -121,6 +125,58 @@ namespace Survey.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult SurveyQuestions(int SurveyId)
+        {
+            //List<SelectListItem> items = new List<SelectListItem>();
+            //items.Add(new SelectListItem { Text = "Yes", Value = "0" });
+            //items.Add(new SelectListItem { Text = "No", Value = "1" });
+            //ViewData["yesno"] = items;
+
+            ViewData["SurveyName"] = SurveyId;
+            List<Question> questions = (List<Question>)questionRepo.SurveyQuestions(SurveyId);
+            return View(questions);
+        }
+
+        [HttpPost]
+        public ActionResult SurveyQuestions(List<Question> answers, string Fname, string Lname, DateTime Bdate, string[] inputs)
+        {
+            if (Fname==null || Lname ==null || Bdate.Date.Year <1900)
+                return RedirectToAction("Allsurveys", "Survey");
+            Participant participant = context.Participants.Where(p => p.FirstName == Fname && 
+                                                                      p.LastName == Lname && 
+                                                                      p.BirthDate == Bdate).FirstOrDefault();
+
+            if (participant == null)
+            {
+                participant = new Participant() { FirstName = Fname, LastName = Lname, BirthDate = Bdate };
+                participantRepo.Add(participant);
+            }
+                        
+            int participantId = participant.Id;
+
+            Answer tempAnswer;
+            for (int i = 0; i < answers.Count; i++)
+            {
+                tempAnswer = new Answer { QuestionId = answers[i].Id, ParticipantID = participantId };
+
+                if (questionRepo.ReadById(answers[i].Id).QuestionType == QuestionType.Text)
+                    tempAnswer.AnswerText = inputs[i].ToString();
+                else if (questionRepo.ReadById(answers[i].Id).QuestionType == QuestionType.YesNo)
+                {
+                    if (inputs[i].ToString() == "Yes")
+                        tempAnswer.AnswerBool = true;
+                    else
+                        tempAnswer.AnswerBool = false;
+                }
+                else
+                    tempAnswer.AnswerValue = inputs[i].ToString();
+                answerRepo.Create(tempAnswer);
+
+            }
+            return RedirectToAction("Allsurveys", "Survey");
         }
     }
 }

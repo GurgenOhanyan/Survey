@@ -113,31 +113,5 @@ namespace Survey.Controllers
                 return View();
             }
         }
-
-        [HttpGet]
-        public ActionResult CreateAnswersforSurvey(int surveyId, int participantId)
-        {
-            var questions = questionRepository.SurveyQuestions(surveyId);
-
-            foreach (var item in questions)
-            {
-                Answer temp = answerRepository.CreateAnswerForQuestion(item.Id, participantId);
-            }
-
-            List<Answer> answers = new List<Answer>();
-            answers = (List<Answer>)answerRepository.GetAnswersBySurveyID(surveyId);
-            return View(answers);
-        }
-
-        [HttpPost]
-        public ActionResult CreateAnswersforSurvey(List<Answer> answers)
-        {
-            for (int i = 0; i < answers.Count; i++)
-            {
-                answerRepository.Update(answers[i]);
-            }
-
-            return View(answers);
-        }
     }
 }

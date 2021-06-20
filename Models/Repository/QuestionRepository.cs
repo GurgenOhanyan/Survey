@@ -28,7 +28,7 @@ namespace Survey.Models.Repository
         }
         public IEnumerable<Question> SurveyQuestions(int surveyId)
         {
-            return this.context.Questions.Where(o => o.SurveyId == surveyId).ToList();
+            return this.context.Questions.Where(o => o.SurveyId == surveyId).Include(q =>q.Options).ToList();
         }
 
         public void Delete(Question entity)
