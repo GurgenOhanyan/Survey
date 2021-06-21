@@ -13,7 +13,7 @@
         <div class="row">
             You can add up to 10 questions.
         </div>
-            <form id="contact_form" asp-action="Create" asp-controller="Questions" onsubmit="return validation()">
+            <form id="contact_form" asp-action="Create" asp-controller="Questions">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Header" class="control-label"></label>
