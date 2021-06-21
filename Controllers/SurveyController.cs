@@ -81,12 +81,14 @@ namespace Survey.Controllers
                     survey.status = Status.Draft;
                     await surveyRepo.CreateAsync(survey);
                     HttpContext.Session.SetInt32("SurveyId", survey.Id);
+                    ViewBag.QuestionsCount = survey.QuestionsCount;
                 }
             }
             else
             {
                 Models.Survey survey = await surveyRepo.ReadByIdAsync(SurveyId);
                 survey.status = Status.Active;
+                ViewBag.QuestionsCount = survey.QuestionsCount;
                 await surveyRepo.UpdateAsync(survey);
             }
             
@@ -107,7 +109,7 @@ namespace Survey.Controllers
         }
         public ActionResult GenerateLink(int id)
         {
-            var fullUrl = this.Url.Action("CreateAnswersforSurvey", "Answers", new { surveyId = id, participantId = 1 });
+            var fullUrl = this.Url.Action("SurveyQuestions", "Questions", new { surveyId = id });
             ViewBag.ReturnUrl = "https://localhost:5001" + fullUrl;
             return View();
         }

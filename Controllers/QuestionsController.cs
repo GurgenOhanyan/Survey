@@ -60,7 +60,6 @@ namespace Survey.Controllers
                 Models.Survey survey = context.Survey.Find(SurveyId);
                 if (survey.QuestionsCount == 10)
                 {
-                    // ViewBag.Message = "The max count of questions are 10";
                     return RedirectToAction("Create", "Survey");
                 }
                 if (questionModelView.Header == null)

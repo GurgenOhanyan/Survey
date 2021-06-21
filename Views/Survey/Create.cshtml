@@ -10,40 +10,52 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form  asp-action="Create" asp-controller="Questions">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Header" class="control-label"></label>
-                <input asp-for="Header" class="form-control" id="txtHeader" />
-                <span id="reqHeader" asp-validation-for="Header" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="QuestionType" class="control-label"></label>
-                <select id="select1" asp-for="QuestionType" class="form-control" asp-items="ViewBag.QuestionTypes" onchange="change()"></select>
-            </div>
-            <div class="form-group">
-                <label id="label1" asp-for="Option1" class="control-label" style="display:none"></label>
-                <input id="input1" asp-for="Option1" class="form-control" style="display:none" />
-                <label id="label2" asp-for="Option2" class="control-label" style="display:none"></label>
-                <input id="input2" asp-for="Option2" class="form-control" style="display:none" />
-                <label id="label3" asp-for="Option3" class="control-label" style="display:none"></label>
-                <input id="input3" asp-for="Option3" class="form-control" style="display:none" />
-                <label id="label4" asp-for="Option4" class="control-label" style="display:none"></label>
-                <input id="input4" asp-for="Option4" class="form-control" style="display:none" />
-                <label id="label5" asp-for="Option5" class="control-label" style="display:none"></label>
-                <input id="input5" asp-for="Option5" class="form-control" style="display:none" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save Question" class="btn btn-primary" />
-            </div>
-            <div class="form-group">
-                @Html.ActionLink("Finish Adding Questions", "SurveyCompleted", "Questions")
-            </div>
-
-        </form>
+        <div class="row">
+            You can add up to 10 questions.
+        </div>
+            <form id="contact_form" asp-action="Create" asp-controller="Questions" onsubmit="return validation()">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Header" class="control-label"></label>
+                    <input asp-for="Header" class="form-control" id="txtHeader" />
+                    <span id="reqHeader" asp-validation-for="Header" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="QuestionType" class="control-label"></label>
+                    <select id="select1" asp-for="QuestionType" class="form-control" asp-items="ViewBag.QuestionTypes" onchange="change()"></select>
+                </div>
+                <div class="form-group">
+                    <label id="label1" asp-for="Option1" class="control-label" style="display:none"></label>
+                    <input id="input1" asp-for="Option1" class="form-control" style="display:none" />
+                    <label id="label2" asp-for="Option2" class="control-label" style="display:none"></label>
+                    <input id="input2" asp-for="Option2" class="form-control" style="display:none" />
+                    <label id="label3" asp-for="Option3" class="control-label" style="display:none"></label>
+                    <input id="input3" asp-for="Option3" class="form-control" style="display:none" />
+                    <label id="label4" asp-for="Option4" class="control-label" style="display:none"></label>
+                    <input id="input4" asp-for="Option4" class="form-control" style="display:none" />
+                    <label id="label5" asp-for="Option5" class="control-label" style="display:none"></label>
+                    <input id="input5" asp-for="Option5" class="form-control" style="display:none" />
+                </div>
+                <div class="form-group">
+                    Questions Count:
+                    @ViewBag.QuestionsCount
+                </div>
+                <div class="form-group">
+                    @if (ViewBag.QuestionsCount == 10)
+                    {
+                        <input disabled="disabled" type="submit" value="Save Question" class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save Question" class="btn btn-primary" />
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.ActionLink("Finish Adding Questions", "SurveyCompleted", "Questions")
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 <script type="text/javascript">
     function change() {
         if (document.getElementById('select1').value == 3) {
