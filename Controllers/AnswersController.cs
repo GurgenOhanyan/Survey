@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Survey.Data;
 using Survey.Models;
 using Survey.Models.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Survey.Controllers
 {
@@ -112,6 +114,11 @@ namespace Survey.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult Answers(int SurveyId)
+        {
+            var answers = answerRepository.GetAnswersBySurveyID(SurveyId);
+            return View(answers);
         }
     }
 }

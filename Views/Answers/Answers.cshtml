@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Answer>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Company> SignInManager
+@inject UserManager<Company> UserManager
+
+@{
+    ViewData["Title"] = "Answers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Answers</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+    @Html.DisplayNameFor(model => model.Participant.FirstName)
+
+    @Html.DisplayFor(model => model.FirstOrDefault().Participant.FirstName)
+
+    @Html.DisplayNameFor(model => model.Participant.LastName)
+
+    @Html.DisplayFor(model => model.FirstOrDefault().Participant.LastName)
+
+    @Html.DisplayNameFor(model => model.Participant.BirthDate)
+
+    @Html.DisplayFor(model => model.FirstOrDefault().Participant.BirthDate)
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Question.Header)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AnswerText)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Question.Header)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnswerText)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>The answers are not avalable please sign in.</p>
+}

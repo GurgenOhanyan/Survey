@@ -107,6 +107,10 @@ namespace Survey.Controllers
         { 
             return RedirectToAction("SurveyQuestions", "Questions", new { surveyId = id });
         }
+        public ActionResult Answers(int id)
+        {
+            return RedirectToAction("Answers", "Answers", new { surveyId = id });
+        }
         public ActionResult GenerateLink(int id)
         {
             var fullUrl = this.Url.Action("SurveyQuestions", "Questions", new { surveyId = id });

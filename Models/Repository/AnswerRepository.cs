@@ -72,11 +72,10 @@ namespace Survey.Models.Repository
         public IList<Answer> GetAnswersBySurveyID(int id)
         {
             return this.context.Answers.Where(a => a.Question.SurveyId == id)
+                .Include(p=>p.Participant)
                 .Include(q => q.Question)
                 .ThenInclude(q => q.Options)
                 .AsNoTracking()
-
-
                 .ToList();
         }
 
