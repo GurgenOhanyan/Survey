@@ -63,7 +63,27 @@
                             @Html.DisplayFor(modelItem => answer.Question.Header)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => answer.AnswerText)
+                            @if (answer.AnswerBool != null)
+                            {
+                                @if (answer.AnswerBool == true)
+                                {
+                                    <p>Yes</p>
+                                }
+                                else
+                                {
+                                  <p>No</p>
+                                }
+                                @*@Html.DisplayFor(modelItem => answer.AnswerBool)*@
+                            }
+                            @if (answer.AnswerValue != null)
+                            {
+                                @Html.DisplayFor(modelItem => answer.AnswerValue)
+                            }
+                            @if (answer.AnswerText != null)
+                            {
+                                @Html.DisplayFor(modelItem => answer.AnswerText)
+                            }
+
                         </td>
                     </tr>
                 }
