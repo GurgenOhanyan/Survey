@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Answer>
+﻿@model IEnumerable<AnswerViewModel>
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Company> SignInManager
 @inject UserManager<Company> UserManager
@@ -12,46 +12,64 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-
-    @Html.DisplayNameFor(model => model.Participant.FirstName)
-
-    @Html.DisplayFor(model => model.FirstOrDefault().Participant.FirstName)
-
-    @Html.DisplayNameFor(model => model.Participant.LastName)
-
-    @Html.DisplayFor(model => model.FirstOrDefault().Participant.LastName)
-
-    @Html.DisplayNameFor(model => model.Participant.BirthDate)
-
-    @Html.DisplayFor(model => model.FirstOrDefault().Participant.BirthDate)
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Question.Header)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AnswerText)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @foreach (var prt in Model)
+    {
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => prt.participant.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => prt.participant.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => prt.participant.BirthDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => prt.participant.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => prt.participant.LastName)
+            </td>
+            <th>
+                @Html.DisplayFor(model => prt.participant.BirthDate)
+            </th>
+        </tr>
+    </tbody>
+</table>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Question.Header)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AnswerText)
-                    </td>
-
+                    <th>
+                        Question
+                    </th>
+                    <th>
+                        Answer
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var answer in prt.Answers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => answer.Question.Header)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => answer.AnswerText)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
+    }
 }
 else
 {

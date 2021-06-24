@@ -117,8 +117,35 @@ namespace Survey.Controllers
         }
         public ActionResult Answers(int SurveyId)
         {
-            var answers = answerRepository.GetAnswersBySurveyID(SurveyId);
-            return View(answers);
+            var answers = this.context.Answers.Where(a => a.Question.SurveyId == SurveyId)
+                .Include(p => p.Participant)
+                .Include(q => q.Question)
+                .ThenInclude(q => q.Options).ToList();
+            //    .GroupBy(o => o.Participant).Select(o=>o.Key);
+            //var v = this.context.Answers
+            //    .GroupBy(o => o.Participant);
+            //var v = this.context.Answers.Include(q => q.Question);
+            //var s = this.context.Answers.Include(q => q.Question)
+            //    .Where(a => a.Question.SurveyId == SurveyId);
+            //var groupAnswers1 = this.context.Answers
+            //    .Include(p => p.Participant)
+            //    .GroupBy(o => o.Participant).ToList();
+            //var groupAnswers = this.context.Answers.Include(q => q.Question)
+            //    .Where(a => a.Question.SurveyId == SurveyId)
+            //    .GroupBy(o => o.Participant).ToList();
+            var groupAnswers3 = answers.GroupBy(o => o.Participant);
+            List<AnswerViewModel> answersView = new List<AnswerViewModel>();
+            foreach (var group in groupAnswers3)
+            {
+                answersView.Add(new AnswerViewModel()
+                {
+                    participant = group.Key,
+                    Answers = group
+                });
+            }
+            return View(answersView);
+            //var answers = answerRepository.GetAnswersBySurveyID(SurveyId);
+           // return View(groupAnswers);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Survey.Models
 {
-    public class QuestionModelView
+    public class QuestionViewModel
     {
         [Required(ErrorMessage = "Header is Required")]
         public string Header { get; set; }
