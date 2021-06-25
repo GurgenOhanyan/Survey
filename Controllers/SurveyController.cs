@@ -63,8 +63,6 @@ namespace Survey.Controllers
 
         // POST: Survey/Create
         //[HttpPost]
-        // [ValidateAntiForgeryToken]
-        //Company company
 
         public async Task<IActionResult> Create()
         {
